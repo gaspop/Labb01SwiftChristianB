@@ -7,13 +7,14 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Main View Controller-->
         <scene sceneID="44i-dm-TpW">
             <objects>
-                <viewController id="o9i-wU-1Kc" sceneMemberID="viewController">
+                <viewController id="o9i-wU-1Kc" customClass="GASMainViewController" customModule="FoodApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="zZk-09-ZRN"/>
                         <viewControllerLayoutGuide type="bottom" id="uuQ-j0-01u"/>
@@ -22,17 +23,35 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GrF-UG-TU9" userLabel="Background">
-                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dkN-1v-viw" userLabel="Logo Container">
+                                <rect key="frame" x="0.0" y="64" width="320" height="336"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xbO-hD-JPa" userLabel="Search Container" colorLabel="IBBuiltInLabel-Green">
-                                        <rect key="frame" x="32" y="236" width="256" height="32"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AppLogo" translatesAutoresizingMaskIntoConstraints="NO" id="44v-vy-uH4">
+                                        <rect key="frame" x="20" y="20" width="280" height="296"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="44v-vy-uH4" secondAttribute="bottom" constant="20" symbolic="YES" id="5wR-Lu-gMA"/>
+                                    <constraint firstAttribute="trailing" secondItem="44v-vy-uH4" secondAttribute="trailing" constant="20" symbolic="YES" id="Kdt-fP-Jvb"/>
+                                    <constraint firstItem="44v-vy-uH4" firstAttribute="top" secondItem="dkN-1v-viw" secondAttribute="top" constant="20" symbolic="YES" id="Maw-aU-V5l"/>
+                                    <constraint firstItem="44v-vy-uH4" firstAttribute="leading" secondItem="dkN-1v-viw" secondAttribute="leading" constant="20" symbolic="YES" id="yH9-wI-Rdk"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GrF-UG-TU9" userLabel="Search Container">
+                                <rect key="frame" x="0.0" y="400" width="320" height="168"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xbO-hD-JPa" userLabel="Search Wrapper" colorLabel="IBBuiltInLabel-Green">
+                                        <rect key="frame" x="32" y="68" width="256" height="32"/>
                                         <subviews>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Sök" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6lE-4f-q1Q">
                                                 <rect key="frame" x="0.0" y="0.0" width="216" height="32"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
+                                                <connections>
+                                                    <action selector="textSearch:" destination="o9i-wU-1Kc" eventType="editingDidBegin" id="iiJ-nh-5Bu"/>
+                                                </connections>
                                             </textField>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U2y-Qg-OVH">
                                                 <rect key="frame" x="224" y="0.0" width="32" height="32"/>
@@ -69,25 +88,35 @@
                                         </constraints>
                                     </view>
                                 </subviews>
+                                <color key="backgroundColor" red="0.81923979920000001" green="0.2256215395" blue="0.368629284" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstItem="xbO-hD-JPa" firstAttribute="centerY" secondItem="GrF-UG-TU9" secondAttribute="centerY" id="4cG-s6-uaI"/>
-                                    <constraint firstItem="xbO-hD-JPa" firstAttribute="centerX" secondItem="GrF-UG-TU9" secondAttribute="centerX" id="d20-bh-uPq"/>
+                                    <constraint firstItem="xbO-hD-JPa" firstAttribute="centerX" secondItem="GrF-UG-TU9" secondAttribute="centerX" id="N2e-Ba-WgE"/>
+                                    <constraint firstItem="xbO-hD-JPa" firstAttribute="centerY" secondItem="GrF-UG-TU9" secondAttribute="centerY" id="UkT-Zi-lsW"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="0.8784313725490196" green="0.8784313725490196" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="uuQ-j0-01u" firstAttribute="top" secondItem="GrF-UG-TU9" secondAttribute="bottom" id="37g-vh-nTo"/>
-                            <constraint firstItem="GrF-UG-TU9" firstAttribute="leading" secondItem="fZ9-Ed-p3d" secondAttribute="leading" id="Tow-Nn-30P"/>
-                            <constraint firstAttribute="trailing" secondItem="GrF-UG-TU9" secondAttribute="trailing" id="eNI-EP-ZOq"/>
-                            <constraint firstItem="GrF-UG-TU9" firstAttribute="top" secondItem="zZk-09-ZRN" secondAttribute="bottom" id="jMb-AT-RD3"/>
+                            <constraint firstItem="dkN-1v-viw" firstAttribute="height" secondItem="GrF-UG-TU9" secondAttribute="height" multiplier="2" id="3C5-xv-bo4"/>
+                            <constraint firstItem="GrF-UG-TU9" firstAttribute="top" secondItem="dkN-1v-viw" secondAttribute="bottom" id="9Ob-Hb-0Dk"/>
+                            <constraint firstItem="GrF-UG-TU9" firstAttribute="top" secondItem="dkN-1v-viw" secondAttribute="bottom" id="A59-NN-05U"/>
+                            <constraint firstItem="dkN-1v-viw" firstAttribute="leading" secondItem="fZ9-Ed-p3d" secondAttribute="leading" id="CYi-yl-Rmg"/>
+                            <constraint firstItem="dkN-1v-viw" firstAttribute="top" secondItem="zZk-09-ZRN" secondAttribute="bottom" id="ZKR-Et-lS3"/>
+                            <constraint firstAttribute="trailing" secondItem="dkN-1v-viw" secondAttribute="trailing" id="dBd-2d-Rix"/>
+                            <constraint firstItem="GrF-UG-TU9" firstAttribute="leading" secondItem="fZ9-Ed-p3d" secondAttribute="leading" id="eun-9w-Q5h"/>
+                            <constraint firstItem="uuQ-j0-01u" firstAttribute="top" secondItem="GrF-UG-TU9" secondAttribute="bottom" id="xJU-gy-hzg"/>
+                            <constraint firstAttribute="trailing" secondItem="GrF-UG-TU9" secondAttribute="trailing" id="xZX-dc-CPu"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="dFi-JD-Oli"/>
+                    <connections>
+                        <outlet property="viewLogoContainer" destination="dkN-1v-viw" id="Qwj-ym-hp6"/>
+                        <outlet property="viewSearchWrapper" destination="xbO-hD-JPa" id="lqh-kG-Fwt"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QeG-bd-PuG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="967.5" y="-466.90140845070425"/>
+            <point key="canvasLocation" x="966.66666666666674" y="-467.11956521739137"/>
         </scene>
         <!--Table View Controller-->
         <scene sceneID="jnR-he-cCT">
@@ -230,6 +259,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="AppLogo" width="2400" height="1443"/>
         <image name="noIdea" width="262" height="395"/>
     </resources>
 </document>

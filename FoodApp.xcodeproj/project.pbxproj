@@ -11,6 +11,7 @@
 		370822E11E51FFE100CDFC4A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 370822DF1E51FFE100CDFC4A /* Main.storyboard */; };
 		370822E31E51FFE100CDFC4A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 370822E21E51FFE100CDFC4A /* Assets.xcassets */; };
 		370822E61E51FFE100CDFC4A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 370822E41E51FFE100CDFC4A /* LaunchScreen.storyboard */; };
+		372718781E55F2E30006F8E2 /* GASMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372718771E55F2E30006F8E2 /* GASMainViewController.swift */; };
 		376C33381E532A0D00919B14 /* GASTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376C33371E532A0D00919B14 /* GASTableViewController.swift */; };
 		376C333A1E532F7500919B14 /* GASDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376C33391E532F7500919B14 /* GASDetailViewController.swift */; };
 /* End PBXBuildFile section */
@@ -22,6 +23,7 @@
 		370822E21E51FFE100CDFC4A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		370822E51E51FFE100CDFC4A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		370822E71E51FFE100CDFC4A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		372718771E55F2E30006F8E2 /* GASMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GASMainViewController.swift; sourceTree = "<group>"; };
 		376C33371E532A0D00919B14 /* GASTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GASTableViewController.swift; sourceTree = "<group>"; };
 		376C33391E532F7500919B14 /* GASDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GASDetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -57,8 +59,9 @@
 			isa = PBXGroup;
 			children = (
 				370822DB1E51FFE100CDFC4A /* AppDelegate.swift */,
-				376C33391E532F7500919B14 /* GASDetailViewController.swift */,
+				372718771E55F2E30006F8E2 /* GASMainViewController.swift */,
 				376C33371E532A0D00919B14 /* GASTableViewController.swift */,
+				376C33391E532F7500919B14 /* GASDetailViewController.swift */,
 				370822DF1E51FFE100CDFC4A /* Main.storyboard */,
 				370822E21E51FFE100CDFC4A /* Assets.xcassets */,
 				370822E41E51FFE100CDFC4A /* LaunchScreen.storyboard */,
@@ -140,6 +143,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				376C33381E532A0D00919B14 /* GASTableViewController.swift in Sources */,
+				372718781E55F2E30006F8E2 /* GASMainViewController.swift in Sources */,
 				370822DC1E51FFE100CDFC4A /* AppDelegate.swift in Sources */,
 				376C333A1E532F7500919B14 /* GASDetailViewController.swift in Sources */,
 			);
