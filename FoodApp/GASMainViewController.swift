@@ -17,6 +17,11 @@ class GASMainViewController: UIViewController {
     @IBOutlet weak var textSearchField: UITextField!
     @IBOutlet weak var buttonSearch: UIButton!
     
+    
+    @IBAction func pressSearch(_ sender: UIButton) {
+        performSegue(withIdentifier: "tableViewSegue", sender: sender)
+    }
+    
     func resetSearchField() {
         self.viewSearchWrapper.center = CGPoint(x: self.viewSearchWrapper.center.x,
                                                 y: self.viewLogoContainer.frame.height
@@ -47,20 +52,25 @@ class GASMainViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-
     /*
+    override func performSegue(withIdentifier identifier: String, sender: Any?) {
+        if identifier == "tableViewSegue" {
+            print("FLORF")
+        }
+    }*/
+
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        if segue.identifier == "tableViewSegue",
+            let target = segue.destination as? GASTableViewController {
+            let word = textSearchField.text!
+            target.parser.searchFor(word: word, action: { target.viewTable.reloadData() } )
+        }
     }
-    */
 
 }

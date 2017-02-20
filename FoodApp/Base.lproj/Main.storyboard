@@ -43,7 +43,7 @@
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GrF-UG-TU9" userLabel="Search Container">
                                         <rect key="frame" x="0.0" y="320.5" width="320" height="183.5"/>
-                                        <color key="backgroundColor" red="0.81923979920000001" green="0.2256215395" blue="0.368629284" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" red="0.0" green="0.25098040700000002" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xbO-hD-JPa" userLabel="Search Wrapper" colorLabel="IBBuiltInLabel-Green">
                                         <rect key="frame" x="32" y="236" width="256" height="32"/>
@@ -75,7 +75,7 @@
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
-                                                    <segue destination="8mx-92-yk8" kind="show" id="O3Z-3I-caO"/>
+                                                    <action selector="pressSearch:" destination="o9i-wU-1Kc" eventType="touchUpInside" id="sAI-zD-Bog"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -93,7 +93,7 @@
                                         </constraints>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="xbO-hD-JPa" firstAttribute="centerX" secondItem="w46-D8-2Kb" secondAttribute="centerX" id="15J-j8-7Sl"/>
                                     <constraint firstItem="dkN-1v-viw" firstAttribute="height" secondItem="GrF-UG-TU9" secondAttribute="height" multiplier="1.75" id="5Ws-xl-DXJ"/>
@@ -125,6 +125,7 @@
                         <outlet property="viewLogoContainer" destination="dkN-1v-viw" id="Qwj-ym-hp6"/>
                         <outlet property="viewSearchContainer" destination="GrF-UG-TU9" id="5OJ-XW-4zi"/>
                         <outlet property="viewSearchWrapper" destination="xbO-hD-JPa" id="lqh-kG-Fwt"/>
+                        <segue destination="8mx-92-yk8" kind="show" identifier="tableViewSegue" id="Wgh-yx-56w"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QeG-bd-PuG" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -189,7 +190,8 @@
                     </tableView>
                     <navigationItem key="navigationItem" id="HpQ-2s-fMm"/>
                     <connections>
-                        <outlet property="tableView" destination="zFn-8L-zEI" id="gjT-sI-ej4"/>
+                        <outlet property="tableView" destination="zFn-8L-zEI" id="Tv6-ON-p7U"/>
+                        <outlet property="viewTable" destination="zFn-8L-zEI" id="t2h-Vk-3Rx"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PYV-gv-ZvM" userLabel="First Responder" sceneMemberID="firstResponder"/>
