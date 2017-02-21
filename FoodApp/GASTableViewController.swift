@@ -18,7 +18,8 @@ class GASTableViewCell : UITableViewCell {
 class GASTableViewController: UITableViewController {
 
     @IBOutlet var viewTable: UITableView!
-    let parser : FoodParser = FoodParser()
+    let parser : APIParser = APIParser()
+    var data : [Food] = []
 
     
     override func viewDidLoad() {
@@ -36,11 +37,7 @@ class GASTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if let data = parser.data {
-            return data.count
-        } else {
-            return 0
-        }
+        return data.count
         
     }
 
@@ -48,8 +45,15 @@ class GASTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! GASTableViewCell
 
-        cell.labelText.text = parser.dataNameAtIndex(indexPath.row)
-        cell.labelValue.text = "\(Int(parser.dataNumberAtIndex(indexPath.row)))"
+        cell.labelText.text = self.data[indexPath.row].name
+        if let details = data[indexPath.row].details {
+            cell.labelValue.text = "\(data[indexPath.row].salt)"
+        } else {
+            cell.labelValue.text = "-"
+            self.data[indexPath.row].getDetails() {
+                self.tableView.reloadData()
+            }
+        }
 
         return cell
     }
@@ -98,7 +102,7 @@ class GASTableViewController: UITableViewController {
         if segue.identifier == "detailSegue",
            let target = segue.destination as? GASDetailViewController,
            let row = tableView.indexPathForSelectedRow?.row {
-            target.input = parser.dataNameAtIndex(row)
+            target.input = data[row].name
         }
 
     }
