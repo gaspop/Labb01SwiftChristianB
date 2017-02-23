@@ -55,51 +55,7 @@ class APIParser {
     }
     
     static func getItemDetails(number: Int, closure: @escaping([String:Any]) -> Void) {
-        print("getItemDetails for: \(number)")
         getDataOfType(query: "/\(number)", closure: closure)
-    }
-
-    /*
-    static func getSearchResult2(word: String, closure: @escaping([[String:Any]]) -> Void) {
-        getGeneralSearchResult(word: word, closure: closure)
-    }
-    
-    static func getDetailResult2(word: String, closure: @escaping([String:Any]) -> Void) {
-        getGeneralSearchResult(word: word, closure: closure)
-    }
-    
-    static func getGeneralSearchResult<T>(word: String, closure: @escaping(T) -> Void) {
-        getDataFromAPI(query: "?query=\(word)") {
-            do {
-                if let result = try JSONSerialization.jsonObject(with: $0, options: jsonOptions) as?  T {
-                    DispatchQueue.main.async {
-                        //print("getSearchResult(word: \(word))  Results: \(result.count)")
-                        //print((result))
-                        closure(result)
-                    }
-                }
-            }
-            catch let error {
-                print(error)
-            }
-        }
-    }
-    */
-    
-    static func getNameFromData(_ data: [String:Any]) -> String {
-        if let name = data["name"] as? String {
-                return name
-        } else {
-            return "-"
-        }
-    }
-    
-    static func getNumberFromData(_ data: [String:Any]) -> Float {
-        if let number = data["number"] as? Float {
-            return number
-        } else {
-            return 0
-        }
     }
     
 }
