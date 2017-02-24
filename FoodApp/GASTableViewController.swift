@@ -10,9 +10,34 @@ import UIKit
 
 class GASTableViewCell : UITableViewCell {
     
+    
+    @IBOutlet weak var buttonFavourite: UIButton!
     @IBOutlet weak var labelText: UILabel!
     @IBOutlet weak var labelValue: UILabel!
-    var food : Food!
+    var food : APIFood!
+    
+    @IBAction func toggleFavourite(_ sender: UIButton) {
+        if !food.isFavourite {
+            UserData.addAsFavourite(food: food)
+        } else {
+            UserData.removeAsFavourite(food: food)
+        }
+        toggleButtonFavouriteColor()
+    }
+    
+    func toggleButtonFavouriteColor() {
+        //buttonFavourite.tintColor = UIColor.red
+        if food.isFavourite {
+            let image = UIImage(named: "heartIcon")?.withRenderingMode(.alwaysTemplate)
+            buttonFavourite.setImage(image, for: .normal)
+            buttonFavourite.tintColor = UIColor.red
+        } else {
+            let image = UIImage(named: "heartIcon")?.withRenderingMode(.alwaysOriginal)
+            buttonFavourite.setImage(image, for: .normal)
+            buttonFavourite.tintColor = UIColor.white
+        }
+    }
+    
     
 }
 
@@ -20,8 +45,8 @@ class GASTableViewController: UITableViewController, UISearchResultsUpdating {
 
     var searchController : UISearchController!
     
-    var data : [Food] = []
-    var searchData : [Food] = []
+    var data : [APIFood] = []
+    var searchData : [APIFood] = []
     var dataCount : Int {
         if tableMode == Mode.Normal {
             return data.count
@@ -133,6 +158,7 @@ class GASTableViewController: UITableViewController, UISearchResultsUpdating {
                 self.tableView.reloadData()
             }*/
         }
+        cell.toggleButtonFavouriteColor()
         
         previousTableMode = tableMode
         
@@ -142,7 +168,7 @@ class GASTableViewController: UITableViewController, UISearchResultsUpdating {
     func requestDetailsWithRange(_ from: Int, _ to: Int) {
         let fromSafe : Int = max(0, from)
         let toSafe : Int = min(to, dataCount - 1)
-        var fromData : [Food] = tableMode == Mode.Normal ? data : searchData
+        var fromData : [APIFood] = tableMode == Mode.Normal ? data : searchData
         
         for index in fromSafe...toSafe {
             fromData[index].getDetails() {

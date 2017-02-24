@@ -14,8 +14,9 @@
 		372718781E55F2E30006F8E2 /* GASMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372718771E55F2E30006F8E2 /* GASMainViewController.swift */; };
 		376C33381E532A0D00919B14 /* GASTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376C33371E532A0D00919B14 /* GASTableViewController.swift */; };
 		376C333A1E532F7500919B14 /* GASDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376C33391E532F7500919B14 /* GASDetailViewController.swift */; };
+		378471681E6051F500028EDD /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378471671E6051F500028EDD /* UserData.swift */; };
 		37A340941E5B4113006466C6 /* APIParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A340931E5B4113006466C6 /* APIParser.swift */; };
-		37A4CECD1E5C910E004A1EF9 /* Food.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A4CECC1E5C910E004A1EF9 /* Food.swift */; };
+		37A4CECD1E5C910E004A1EF9 /* APIFood.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A4CECC1E5C910E004A1EF9 /* APIFood.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,8 +29,9 @@
 		372718771E55F2E30006F8E2 /* GASMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GASMainViewController.swift; sourceTree = "<group>"; };
 		376C33371E532A0D00919B14 /* GASTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GASTableViewController.swift; sourceTree = "<group>"; };
 		376C33391E532F7500919B14 /* GASDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GASDetailViewController.swift; sourceTree = "<group>"; };
+		378471671E6051F500028EDD /* UserData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		37A340931E5B4113006466C6 /* APIParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIParser.swift; sourceTree = "<group>"; };
-		37A4CECC1E5C910E004A1EF9 /* Food.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Food.swift; sourceTree = "<group>"; };
+		37A4CECC1E5C910E004A1EF9 /* APIFood.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIFood.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,8 +68,9 @@
 				372718771E55F2E30006F8E2 /* GASMainViewController.swift */,
 				376C33371E532A0D00919B14 /* GASTableViewController.swift */,
 				376C33391E532F7500919B14 /* GASDetailViewController.swift */,
-				37A4CECC1E5C910E004A1EF9 /* Food.swift */,
 				37A340931E5B4113006466C6 /* APIParser.swift */,
+				37A4CECC1E5C910E004A1EF9 /* APIFood.swift */,
+				378471671E6051F500028EDD /* UserData.swift */,
 				370822DF1E51FFE100CDFC4A /* Main.storyboard */,
 				370822E21E51FFE100CDFC4A /* Assets.xcassets */,
 				370822E41E51FFE100CDFC4A /* LaunchScreen.storyboard */,
@@ -150,10 +153,11 @@
 			files = (
 				376C33381E532A0D00919B14 /* GASTableViewController.swift in Sources */,
 				372718781E55F2E30006F8E2 /* GASMainViewController.swift in Sources */,
+				378471681E6051F500028EDD /* UserData.swift in Sources */,
 				370822DC1E51FFE100CDFC4A /* AppDelegate.swift in Sources */,
 				37A340941E5B4113006466C6 /* APIParser.swift in Sources */,
 				376C333A1E532F7500919B14 /* GASDetailViewController.swift in Sources */,
-				37A4CECD1E5C910E004A1EF9 /* Food.swift in Sources */,
+				37A4CECD1E5C910E004A1EF9 /* APIFood.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

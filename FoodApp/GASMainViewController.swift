@@ -69,10 +69,10 @@ class GASMainViewController: UIViewController {
         if segue.identifier == "tableViewSegue",
             let target = segue.destination as? GASTableViewController {
             let word = textSearchField.text!
-            APIParser.getSearchResult(word: word) { output in
+            getSearchResult(word: word) { output in
                 print("Loading Search Result")
                 for f in output {
-                    target.data.append(Food(data: f))
+                    target.data.append(APIFood(data: f))
                 }
                 target.tableView.reloadData()
             }

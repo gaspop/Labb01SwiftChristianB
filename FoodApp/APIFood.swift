@@ -8,12 +8,36 @@
 
 import Foundation
 
-class Food {
+class APIFood {
     
-    let name : String
-    let number : Int
+    private var _data : [String:Any]
+    private(set) var data : [String:Any] {
+        get {
+            return _data
+        }
+        set(value) {
+            _data = value
+        }
+    }
+    
+    var name : String {
+        return data["name"] as! String
+    }
+    var number : Int {
+        return Int(data["number"] as! Float)
+    }
+    var details : [String:Any]? {
+        if let detailData = data["nutrientValues"] as? [String:Any] {
+            return detailData
+        } else {
+            return nil
+        }
+    }
     var detailsRequestSent : Bool = false
-    var details : [String:Any]?
+    
+    var isFavourite : Bool {
+        return UserData.favouritesIDs.contains(number)
+    }
     
     // OBS! Annat tillvägagångsätt med Float?
     // Bör samtliga värden vara optionals ifall något inte finns
@@ -28,18 +52,7 @@ class Food {
     }
     
     init (data: [String:Any]) {
-        //print("New Food with data:\n\(data)")
-        if let name = data["name"] as? String {
-            self.name = name
-        } else {
-            name = ""
-        }
-        
-        if let number = data["number"] as? Float {
-            self.number = Int(number)
-        } else {
-            number = 0
-        }
+        _data = data
     }
     
     /* FRÅGA ERIK OM FÖLJANDE
@@ -61,9 +74,9 @@ class Food {
         if !detailsRequestSent {
             detailsRequestSent = true
             //print("getItemDetails for: \(number) (\(name))")
-            APIParser.getItemDetails(number: self.number) {
-                output in
-                self.details = output["nutrientValues"] as? [String:Any]
+            getItem(number: self.number) {
+                newData in
+                self.data = newData
                 closure()
             }
         }

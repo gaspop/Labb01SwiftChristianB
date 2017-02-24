@@ -145,36 +145,54 @@
                                 <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gby-24-CEY" id="TXs-CF-Fb1">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Value" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ziK-Va-TQV">
-                                            <rect key="frame" x="220" y="0.0" width="80" height="44"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Value" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ziK-Va-TQV">
+                                            <rect key="frame" x="248" y="0.0" width="64" height="44"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="64" id="1ER-0N-UWv"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GKA-y7-MTF">
-                                            <rect key="frame" x="52" y="0.0" width="160" height="44"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OMW-YK-Iw9">
-                                            <rect key="frame" x="8" y="7" width="30" height="30"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="29"/>
-                                            <state key="normal" title="☆">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OMW-YK-Iw9" userLabel="Favourite">
+                                            <rect key="frame" x="8" y="8" width="27.5" height="27.5"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="OMW-YK-Iw9" secondAttribute="height" multiplier="1:1" id="QYQ-ti-pl0"/>
+                                            </constraints>
+                                            <state key="normal" image="heartIcon">
                                                 <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
+                                            <connections>
+                                                <action selector="toggleFavourite:" destination="gby-24-CEY" eventType="touchUpInside" id="2t8-d4-8na"/>
+                                            </connections>
                                         </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GKA-y7-MTF">
+                                            <rect key="frame" x="43.5" y="0.0" width="196.5" height="44"/>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="OMW-YK-Iw9" firstAttribute="top" secondItem="TXs-CF-Fb1" secondAttribute="top" constant="8" id="9F2-YD-lJk"/>
+                                        <constraint firstAttribute="bottom" secondItem="OMW-YK-Iw9" secondAttribute="bottom" constant="8" id="YkI-3Y-klh"/>
+                                        <constraint firstItem="ziK-Va-TQV" firstAttribute="leading" secondItem="GKA-y7-MTF" secondAttribute="trailing" constant="8" id="ZQd-7f-v2f"/>
+                                        <constraint firstItem="ziK-Va-TQV" firstAttribute="top" secondItem="TXs-CF-Fb1" secondAttribute="top" id="aXL-r0-s3K"/>
+                                        <constraint firstItem="OMW-YK-Iw9" firstAttribute="leading" secondItem="TXs-CF-Fb1" secondAttribute="leading" constant="8" id="hrn-u0-NMk"/>
+                                        <constraint firstAttribute="bottom" secondItem="ziK-Va-TQV" secondAttribute="bottom" id="jZM-2d-PpX"/>
+                                        <constraint firstAttribute="trailing" secondItem="ziK-Va-TQV" secondAttribute="trailing" constant="8" id="oNS-xu-HmB"/>
+                                        <constraint firstItem="GKA-y7-MTF" firstAttribute="top" secondItem="TXs-CF-Fb1" secondAttribute="top" id="rnd-0n-5aH"/>
+                                        <constraint firstAttribute="bottom" secondItem="GKA-y7-MTF" secondAttribute="bottom" id="vxl-DH-QVx"/>
+                                        <constraint firstItem="GKA-y7-MTF" firstAttribute="leading" secondItem="OMW-YK-Iw9" secondAttribute="trailing" constant="8" id="xxL-kQ-UI7"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="buttonFavourite" destination="OMW-YK-Iw9" id="BB4-sS-4SL"/>
                                     <outlet property="labelText" destination="GKA-y7-MTF" id="dLA-ng-PZg"/>
                                     <outlet property="labelValue" destination="ziK-Va-TQV" id="F56-Wb-g8z"/>
                                     <segue destination="bLS-5c-V27" kind="show" identifier="detailSegue" id="M8O-E0-So0"/>
@@ -187,7 +205,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="HpQ-2s-fMm">
-                        <barButtonItem key="rightBarButtonItem" title="Item" id="eQv-cW-dx1"/>
+                        <barButtonItem key="rightBarButtonItem" image="heartBarButton" id="I1a-5w-lKh"/>
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="zFn-8L-zEI" id="Tv6-ON-p7U"/>
@@ -274,6 +292,8 @@
     </scenes>
     <resources>
         <image name="AppLogo" width="2400" height="1443"/>
+        <image name="heartBarButton" width="22" height="22"/>
+        <image name="heartIcon" width="128" height="128"/>
         <image name="noIdea" width="262" height="395"/>
     </resources>
 </document>
