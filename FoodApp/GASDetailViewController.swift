@@ -8,23 +8,98 @@
 
 import UIKit
 
-class GASDetailViewController: UIViewController {
-
+class GASDetailViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
     @IBOutlet weak var labelName: UILabel!
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var textInformation: UITextView!
+    
+    var food : APIFood!
     var input : String?
+    
+    let imageDirectory = "/FoodApp/"
+    var imageName : String {
+        return "food\(food.number).png"
+    }
+    var imagePath : String {
+        let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
+        if let documentsDirectory = paths.first {
+            return documentsDirectory.appending("/\(imageName)")
+        } else {
+            fatalError("No documents directory.")
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        displayFoodImage()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        labelName.text = input
+        
+        labelName.text = food.name
+        displayFoodDetails()
         // Do any additional setup after loading the view.
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    func displayFoodImage() {
+        if let image = UIImage(contentsOfFile: imagePath) {
+            imageView.image = image
+        } else {
+            NSLog("Failed to load image from: \(imagePath)")
+        }
     }
     
+    func displayFoodDetails() {
+        if food.details != nil {
+            textInformation.text = "Protein: \(food.protein)\nSalt: \(food.salt)\nVatten: \(food.water)"
+        } else {
+            food.getDetails {
+                print("Food item missing details; retrieving...")
+                self.displayFoodDetails()
+            }
+        }
+    }
 
+    @IBAction func selectImage(_ sender: UITapGestureRecognizer) {
+        print("Blepp")
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        picker.allowsEditing = true
+        
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            picker.sourceType = .camera
+        } else if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum) {
+            picker.sourceType = .savedPhotosAlbum
+        } else {
+            fatalError("No source type.")
+        }
+        
+        present(picker,animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        let image = info[UIImagePickerControllerEditedImage] as! UIImage
+        // UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
+        
+        if let data = UIImagePNGRepresentation(image) {
+            do {
+                let url = URL(fileURLWithPath: imagePath)
+                try data.write(to: url)
+                NSLog("Done writing image data to file: \(imagePath)")
+            }
+            catch let error {
+                NSLog("Failed to save data: \(error)")
+            }
+        }
+        
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
     /*
     // MARK: - Navigation
 

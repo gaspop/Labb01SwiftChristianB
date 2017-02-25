@@ -270,7 +270,7 @@ class GASTableViewController: UITableViewController, UISearchResultsUpdating {
         if segue.identifier == "detailSegue",
            let target = segue.destination as? GASDetailViewController,
            let row = tableView.indexPathForSelectedRow?.row {
-            target.input = data[row].name
+            target.food = tableData[row]
         }
 
     }
