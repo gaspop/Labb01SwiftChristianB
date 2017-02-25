@@ -92,11 +92,20 @@
                                             <constraint firstItem="6lE-4f-q1Q" firstAttribute="leading" secondItem="xbO-hD-JPa" secondAttribute="leading" id="nZP-Pc-4yJ"/>
                                         </constraints>
                                     </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MMl-Qz-SdN">
+                                        <rect key="frame" x="32" y="276" width="256" height="32"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="xbO-hD-JPa" firstAttribute="centerX" secondItem="w46-D8-2Kb" secondAttribute="centerX" id="15J-j8-7Sl"/>
                                     <constraint firstItem="dkN-1v-viw" firstAttribute="height" secondItem="GrF-UG-TU9" secondAttribute="height" multiplier="1.75" id="5Ws-xl-DXJ"/>
+                                    <constraint firstItem="MMl-Qz-SdN" firstAttribute="centerX" secondItem="w46-D8-2Kb" secondAttribute="centerX" id="6Vh-n3-6fh"/>
+                                    <constraint firstItem="MMl-Qz-SdN" firstAttribute="height" secondItem="xbO-hD-JPa" secondAttribute="height" id="Cdk-BY-uZD"/>
+                                    <constraint firstItem="MMl-Qz-SdN" firstAttribute="top" secondItem="xbO-hD-JPa" secondAttribute="bottom" constant="8" symbolic="YES" id="P9Z-dQ-XBL"/>
                                     <constraint firstAttribute="bottom" secondItem="GrF-UG-TU9" secondAttribute="bottom" id="Y2R-Rh-DEJ"/>
                                     <constraint firstItem="GrF-UG-TU9" firstAttribute="top" secondItem="dkN-1v-viw" secondAttribute="bottom" id="YN0-ac-pPW"/>
                                     <constraint firstItem="dkN-1v-viw" firstAttribute="top" secondItem="w46-D8-2Kb" secondAttribute="top" id="ZzD-ea-Olz"/>
@@ -106,6 +115,7 @@
                                     <constraint firstItem="dkN-1v-viw" firstAttribute="leading" secondItem="w46-D8-2Kb" secondAttribute="leading" id="nXi-Ig-04M"/>
                                     <constraint firstItem="xbO-hD-JPa" firstAttribute="centerY" secondItem="w46-D8-2Kb" secondAttribute="centerY" id="oFP-cC-geE"/>
                                     <constraint firstItem="GrF-UG-TU9" firstAttribute="top" secondItem="dkN-1v-viw" secondAttribute="bottom" id="t5h-mg-LYt"/>
+                                    <constraint firstItem="MMl-Qz-SdN" firstAttribute="width" secondItem="xbO-hD-JPa" secondAttribute="width" id="uGD-ZW-DsZ"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -121,17 +131,20 @@
                         <barButtonItem key="rightBarButtonItem" image="heartBarButton" id="e01-93-EZe">
                             <connections>
                                 <action selector="toggleShowFavourites:" destination="8mx-92-yk8" id="i04-Nv-ZNB"/>
+                                <segue destination="8mx-92-yk8" kind="show" identifier="showFavourites" id="aIB-0E-yyg"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="barButtonFavourites" destination="e01-93-EZe" id="ldh-zV-mWx"/>
                         <outlet property="buttonSearch" destination="U2y-Qg-OVH" id="lZR-vi-P81"/>
+                        <outlet property="labelSearchFeedback" destination="MMl-Qz-SdN" id="1pk-xe-xhf"/>
                         <outlet property="textSearchField" destination="6lE-4f-q1Q" id="4bp-Mp-mJW"/>
                         <outlet property="viewBackground" destination="w46-D8-2Kb" id="rAQ-ZX-bJy"/>
                         <outlet property="viewLogoContainer" destination="dkN-1v-viw" id="Qwj-ym-hp6"/>
                         <outlet property="viewSearchContainer" destination="GrF-UG-TU9" id="5OJ-XW-4zi"/>
                         <outlet property="viewSearchWrapper" destination="xbO-hD-JPa" id="lqh-kG-Fwt"/>
-                        <segue destination="8mx-92-yk8" kind="show" identifier="tableViewSegue" id="Wgh-yx-56w"/>
+                        <segue destination="8mx-92-yk8" kind="show" identifier="showSearchResult" id="Wgh-yx-56w"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QeG-bd-PuG" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -218,6 +231,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="barButtonFavourites" destination="I1a-5w-lKh" id="T4x-e0-ae2"/>
                         <outlet property="tableView" destination="zFn-8L-zEI" id="Tv6-ON-p7U"/>
                     </connections>
                 </tableViewController>
@@ -340,4 +354,7 @@
         <image name="heartBarButton" width="22" height="22"/>
         <image name="heartIcon" width="128" height="128"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="aIB-0E-yyg"/>
+    </inferredMetricsTieBreakers>
 </document>

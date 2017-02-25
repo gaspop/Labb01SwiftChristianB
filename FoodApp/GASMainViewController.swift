@@ -17,9 +17,16 @@ class GASMainViewController: UIViewController {
     @IBOutlet weak var textSearchField: UITextField!
     @IBOutlet weak var buttonSearch: UIButton!
     
+    @IBOutlet weak var barButtonFavourites: UIBarButtonItem!
+    
+    @IBOutlet weak var labelSearchFeedback: UILabel!
+    
+    var searchResult : [APIFood] = []
+    
     
     @IBAction func pressSearch(_ sender: UIButton) {
-        performSegue(withIdentifier: "tableViewSegue", sender: sender)
+        search()
+        //performSegue(withIdentifier: "tableViewSegue", sender: sender)
     }
     
     func resetSearchField() {
@@ -47,11 +54,42 @@ class GASMainViewController: UIViewController {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        if UserData.favouritesIDs.count > 0 {
+            barButtonFavourites.isEnabled = true
+        } else {
+            barButtonFavourites.isEnabled = false
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+
         // Do any additional setup after loading the view.
     }
 
+    func search() {
+        if let word = textSearchField.text,
+           word.characters.count > 0 {
+            getSearchResult(word: word) {
+                result in
+                self.searchResult = []
+                for item in result {
+                    self.searchResult.append(APIFood(data: item))
+                }
+                if self.searchResult.count > 0 {
+                    print("Search result count: \(self.searchResult.count)")
+                    self.labelSearchFeedback.text = ""
+                    self.performSegue(withIdentifier: "showSearchResult", sender: nil)
+                } else {
+                    self.labelSearchFeedback.text = "Inget resultat."
+                }
+            }
+        } else {
+            labelSearchFeedback.text = "Inget att söka efter."
+        }
+    }
+    
     /*
     override func performSegue(withIdentifier identifier: String, sender: Any?) {
         if identifier == "tableViewSegue" {
@@ -66,16 +104,13 @@ class GASMainViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        if segue.identifier == "tableViewSegue",
+        if segue.identifier == "showSearchResult",
             let target = segue.destination as? GASTableViewController {
-            let word = textSearchField.text!
-            getSearchResult(word: word) { output in
-                print("Loading Search Result")
-                for f in output {
-                    target.data.append(APIFood(data: f))
-                }
-                target.tableView.reloadData()
-            }
+            target.data = searchResult
+        } else if segue.identifier == "showFavourites",
+            let target = segue.destination as? GASTableViewController {
+            target.data = []
+            target.tableMode = .Favourites
         }
     }
 

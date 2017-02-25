@@ -51,6 +51,9 @@ class GASTableViewController: UITableViewController, UISearchResultsUpdating {
 
     var searchController : UISearchController!
 
+    @IBOutlet weak var barButtonFavourites: UIBarButtonItem!
+    
+    
     var data : [APIFood] = []
     var searchData : [APIFood] = []
     var _favouritesData : [APIFood]?
@@ -120,6 +123,10 @@ class GASTableViewController: UITableViewController, UISearchResultsUpdating {
         searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false
         tableView.tableHeaderView = searchController.searchBar
+        
+        if tableMode == .Favourites {
+            barButtonFavourites.isEnabled = false
+        }
         
     }
 
