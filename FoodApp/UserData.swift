@@ -57,9 +57,7 @@ class UserData {
     static func removeAsFavourite(food: APIFood) {
         let defaults = UserDefaults()
         var newFavouritesData = favouritesAsDictionaries
-        print("Data Old:\n\(newFavouritesData)")
         newFavouritesData = newFavouritesData.filter( { Int($0["number"] as! Float) != food.number} )
-        print("Data New:\n\(newFavouritesData)")
         defaults.set(newFavouritesData, forKey: keyFavourites)
         
         var newFavouritesIDs = favouritesIDs

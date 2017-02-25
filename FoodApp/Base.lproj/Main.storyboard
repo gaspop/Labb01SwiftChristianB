@@ -205,7 +205,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="HpQ-2s-fMm">
-                        <barButtonItem key="rightBarButtonItem" image="heartBarButton" id="I1a-5w-lKh"/>
+                        <barButtonItem key="rightBarButtonItem" image="heartBarButton" id="I1a-5w-lKh">
+                            <connections>
+                                <action selector="toggleShowFavourites:" destination="8mx-92-yk8" id="glt-TT-9Si"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="zFn-8L-zEI" id="Tv6-ON-p7U"/>
@@ -230,7 +234,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3aB-tA-zfx" userLabel="BG Container">
                                 <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noIdea" translatesAutoresizingMaskIntoConstraints="NO" id="wa4-kz-EBX" userLabel="Image">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wa4-kz-EBX" userLabel="Image">
                                         <rect key="frame" x="16" y="60" width="288" height="424"/>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Dsr-HO-x7j" userLabel="Label">
@@ -294,6 +298,5 @@
         <image name="AppLogo" width="2400" height="1443"/>
         <image name="heartBarButton" width="22" height="22"/>
         <image name="heartIcon" width="128" height="128"/>
-        <image name="noIdea" width="262" height="395"/>
     </resources>
 </document>

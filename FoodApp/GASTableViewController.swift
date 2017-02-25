@@ -14,6 +14,7 @@ class GASTableViewCell : UITableViewCell {
     @IBOutlet weak var buttonFavourite: UIButton!
     @IBOutlet weak var labelText: UILabel!
     @IBOutlet weak var labelValue: UILabel!
+    weak var table : GASTableViewController!
     var food : APIFood!
     
     @IBAction func toggleFavourite(_ sender: UIButton) {
@@ -23,6 +24,9 @@ class GASTableViewCell : UITableViewCell {
             UserData.removeAsFavourite(food: food)
         }
         toggleButtonFavouriteColor()
+        if (table.tableMode == .Favourites) {
+            table.updateFavouritesData()
+        }
     }
     
     func toggleButtonFavouriteColor() {
@@ -41,20 +45,30 @@ class GASTableViewCell : UITableViewCell {
     
 }
 
+//TODO: Ska SearchController gå efter API-resultatet eller ska den filtrera beroende på om det eller favorit-listan?
+
 class GASTableViewController: UITableViewController, UISearchResultsUpdating {
 
     var searchController : UISearchController!
-    
+
     var data : [APIFood] = []
     var searchData : [APIFood] = []
-    var dataCount : Int {
-        if tableMode == Mode.Normal {
-            return data.count
-        } else if tableMode == Mode.Search {
-            return searchData.count
-        } else {
-            return 0
+    var _favouritesData : [APIFood]?
+    var favouritesData : [APIFood] {
+        if _favouritesData == nil || (tableMode == .Favourites && previousTableMode != .Favourites) {
+            _favouritesData = UserData.favourites
         }
+        return _favouritesData!
+    }
+    var tableData : [APIFood] {
+        switch tableMode {
+        case .Normal:       return data
+        case .Search:       return searchData
+        case .Favourites:   return favouritesData
+        }
+    }
+    var tableDataCount : Int {
+        return tableData.count
     }
     
     var sentRequests : Int = 0
@@ -64,26 +78,37 @@ class GASTableViewController: UITableViewController, UISearchResultsUpdating {
     let rowRange : Int = 20
 
     enum Mode {
-        case Normal, Search
+        case Normal, Search, Favourites
     }
     
     var previousTableMode : Mode = Mode.Normal
-    
+    var _tableMode : Mode = Mode.Normal
     var tableMode : Mode {
-        if let searchText = searchController.searchBar.text {
-            if searchText.isEmpty {
-                return Mode.Normal
+        get {
+            if isSearching {
+                return Mode.Search
+            } else {
+                return _tableMode
             }
-        } else {
-            return Mode.Normal
         }
-        return Mode.Search
+        set(mode) {
+            _tableMode = mode
+        }
+    }
+    
+    var isSearching : Bool {
+        return searchController.isActive && !(searchController.searchBar.text ?? "").isEmpty
     }
     
     func resetTableRange() {
         checkedRangeMin = 0
         checkedRangeMax = 0
         lastRowIndex = 0
+    }
+    
+    func updateFavouritesData() {
+        _favouritesData = UserData.favourites
+        tableView.reloadData()
     }
     
     override func viewDidLoad() {
@@ -107,6 +132,17 @@ class GASTableViewController: UITableViewController, UISearchResultsUpdating {
         resetTableRange()
         tableView.reloadData()
     }
+        
+    @IBAction func toggleShowFavourites(_ sender: UIBarButtonItem) {
+        if tableMode == .Normal {
+            tableMode = .Favourites
+        } else {
+            tableMode = .Normal
+        }
+        resetTableRange()
+        tableView.reloadData()
+    }
+    
 
     // MARK: - Table view data source
 
@@ -115,30 +151,33 @@ class GASTableViewController: UITableViewController, UISearchResultsUpdating {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataCount
+        return tableDataCount
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let row = indexPath.row
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! GASTableViewCell
+        cell.table = self
         
         if (previousTableMode != tableMode) {
             resetTableRange()
         }
         
+        cell.food = tableData[row]
+        /*
         if tableMode == Mode.Normal {
             cell.food = data[row]
         } else if tableMode == Mode.Search {
             cell.food = searchData[row]
         }
-        
+        */
         if row <= checkedRangeMin {
             checkedRangeMin = max(0, row - rowRange)
             requestDetailsWithRange(checkedRangeMin, row)
             print("up range")
         }
         if row >= checkedRangeMax {
-            checkedRangeMax = min(row + rowRange, dataCount - 1)
+            checkedRangeMax = min(row + rowRange, tableDataCount - 1)
             requestDetailsWithRange(row, checkedRangeMax)
             print("down range")
         }
@@ -167,11 +206,11 @@ class GASTableViewController: UITableViewController, UISearchResultsUpdating {
     
     func requestDetailsWithRange(_ from: Int, _ to: Int) {
         let fromSafe : Int = max(0, from)
-        let toSafe : Int = min(to, dataCount - 1)
-        var fromData : [APIFood] = tableMode == Mode.Normal ? data : searchData
+        let toSafe : Int = min(to, tableDataCount - 1)
+        //var fromData : [APIFood] = tableMode == Mode.Normal ? data : searchData
         
         for index in fromSafe...toSafe {
-            fromData[index].getDetails() {
+            tableData[index].getDetails() {
                 param in
                 /*if let requestSent = b as Bool? {
                     self.sentRequests += 1
