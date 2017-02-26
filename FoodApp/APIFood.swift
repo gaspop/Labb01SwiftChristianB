@@ -40,7 +40,12 @@ class APIFood {
     }
     
     // OBS! Annat tillvägagångsätt med Float?
-    // Bör samtliga värden vara optionals ifall något inte finns
+    // Bör samtliga värden vara optionals ifall något inte finns?
+    
+    // Ska det vara energyKj eller energyKcal ?
+    var energy : Float {
+        return details!["energyKcal"] as! Float
+    }
     var protein : Float {
         return details!["protein"] as! Float
     }
@@ -53,6 +58,14 @@ class APIFood {
     
     init (data: [String:Any]) {
         _data = data
+    }
+    
+    func toggleFavouriteStatus() {
+        if !isFavourite {
+            UserData.addAsFavourite(food: self)
+        } else {
+            UserData.removeAsFavourite(food: self)
+        }
     }
     
     /* FRÅGA ERIK OM FÖLJANDE

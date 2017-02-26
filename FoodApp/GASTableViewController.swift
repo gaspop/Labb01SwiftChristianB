@@ -18,11 +18,7 @@ class GASTableViewCell : UITableViewCell {
     var food : APIFood!
     
     @IBAction func toggleFavourite(_ sender: UIButton) {
-        if !food.isFavourite {
-            UserData.addAsFavourite(food: food)
-        } else {
-            UserData.removeAsFavourite(food: food)
-        }
+        food.toggleFavouriteStatus()
         toggleButtonFavouriteColor()
         if (table.tableMode == .Favourites) {
             table.updateFavouritesData()
@@ -197,7 +193,7 @@ class GASTableViewController: UITableViewController, UISearchResultsUpdating {
 
         cell.labelText.text = cell.food.name
         if cell.food.details != nil {
-            cell.labelValue.text = "\(cell.food.protein)"
+            cell.labelValue.text = "\(Int(cell.food.energy))"
         } else {
             cell.labelValue.text = "-"
             /*self.data[indexPath.row].getDetails() {

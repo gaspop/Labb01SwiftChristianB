@@ -13,6 +13,7 @@ class GASDetailViewController: UIViewController, UIImagePickerControllerDelegate
     @IBOutlet weak var labelName: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var textInformation: UITextView!
+    @IBOutlet weak var textValues: UITextView!
     
     var food : APIFood!
     var input : String?
@@ -52,8 +53,11 @@ class GASDetailViewController: UIViewController, UIImagePickerControllerDelegate
     
     func displayFoodDetails() {
         if food.details != nil {
-            textInformation.text = "Protein: \(food.protein)\nSalt: \(food.salt)\nVatten: \(food.water)"
+            textInformation.text = "Energivärde:\n\nProtein:\nSalt:\nVatten:"
+            textValues.text = "\(Int(food.energy))\n\n\(food.protein)\n\(food.salt)\n\(food.water)"
         } else {
+            textInformation.text = ""
+            textValues.text = ""
             food.getDetails {
                 print("Food item missing details; retrieving...")
                 self.displayFoodDetails()

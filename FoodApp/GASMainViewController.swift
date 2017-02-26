@@ -18,11 +18,16 @@ class GASMainViewController: UIViewController {
     @IBOutlet weak var buttonSearch: UIButton!
     
     @IBOutlet weak var barButtonFavourites: UIBarButtonItem!
-    
     @IBOutlet weak var labelSearchFeedback: UILabel!
     
     var searchResult : [APIFood] = []
     
+    var searchFieldOrigin : CGPoint {
+        return CGPoint(x: self.viewSearchWrapper.center.x,
+                       y: self.viewLogoContainer.frame.height
+                          + (self.viewSearchContainer.frame.height / 2))
+    }
+    var searchFieldGap : Float = 0.0
     
     @IBAction func pressSearch(_ sender: UIButton) {
         search()
@@ -38,20 +43,25 @@ class GASMainViewController: UIViewController {
     func positionSearchField() {
         self.viewSearchWrapper.center = CGPoint(x: self.viewSearchWrapper.center.x,
                                                 y: self.viewLogoContainer.frame.height / 2)
+        
+        //var y = UIKeyboardFrameBeginUserInfoKey
     }
     
     @IBAction func textSearch(_ sender: UITextField) {
-        UIView.animate(withDuration: 0.5) {
+        /*UIView.animate(withDuration: 0.5) {
             self.positionSearchField()
-        }
+        }*/
         
     }
     
+    
     override func viewDidLayoutSubviews() {
-        resetSearchField()
+        //viewSearchWrapper.center = searchFieldOrigin
+        print("Reset searchField position.")
+        /*resetSearchField()
         if (textSearchField.isEditing) {
             positionSearchField()
-        }
+        }*/
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -60,11 +70,43 @@ class GASMainViewController: UIViewController {
         } else {
             barButtonFavourites.isEnabled = false
         }
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    func keyboardWillShow(notification: Notification) {
+        if let userInfo = notification.userInfo {
+            if let keyboardSize = (userInfo[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+                //let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
+                print("View height: \(viewBackground.frame.height)")
+                print("Keyboard height: \(keyboardSize.height)")
+                viewSearchWrapper.center = CGPoint(x: viewSearchWrapper.center.x,
+                                                   y: (viewBackground.frame.height - keyboardSize.height) / 2)
+                labelSearchFeedback.center = CGPoint(x: labelSearchFeedback.center.x,
+                                                     y: viewSearchWrapper.center.y + CGFloat(searchFieldGap))
+            } else {
+                // no UIKeyboardFrameBeginUserInfoKey entry in userInfo
+            }
+        } else {
+            // no userInfo dictionary in notification
+        }
+    }
+    
+    func keyboardWillHide(notification: Notification) {
+        viewSearchWrapper.center = CGPoint(x: viewSearchWrapper.center.x,
+                                           y: viewLogoContainer.frame.height
+                                              + (viewSearchContainer.frame.height / 2))
+        labelSearchFeedback.center = CGPoint(x: labelSearchFeedback.center.x,
+                                             y: viewSearchWrapper.center.y + CGFloat(searchFieldGap))
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        searchFieldGap = Float(labelSearchFeedback.center.y) - Float(viewSearchWrapper.center.y)
         // Do any additional setup after loading the view.
     }
 
