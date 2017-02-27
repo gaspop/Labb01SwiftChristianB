@@ -78,12 +78,16 @@ class GASMainViewController: UIViewController {
         NotificationCenter.default.removeObserver(self)
     }
     
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        searchFieldGap = Float(labelSearchFeedback.center.y) - Float(viewSearchWrapper.center.y)
+        // Do any additional setup after loading the view.
+    }
+    
     func keyboardWillShow(notification: Notification) {
         if let userInfo = notification.userInfo {
             if let keyboardSize = (userInfo[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-                //let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height, right: 0)
-                print("View height: \(viewBackground.frame.height)")
-                print("Keyboard height: \(keyboardSize.height)")
                 viewSearchWrapper.center = CGPoint(x: viewSearchWrapper.center.x,
                                                    y: (viewBackground.frame.height - keyboardSize.height) / 2)
                 labelSearchFeedback.center = CGPoint(x: labelSearchFeedback.center.x,
@@ -102,12 +106,6 @@ class GASMainViewController: UIViewController {
                                               + (viewSearchContainer.frame.height / 2))
         labelSearchFeedback.center = CGPoint(x: labelSearchFeedback.center.x,
                                              y: viewSearchWrapper.center.y + CGFloat(searchFieldGap))
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        searchFieldGap = Float(labelSearchFeedback.center.y) - Float(viewSearchWrapper.center.y)
-        // Do any additional setup after loading the view.
     }
 
     func search() {

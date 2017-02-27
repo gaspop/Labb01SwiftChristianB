@@ -119,7 +119,7 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.8784313725490196" green="0.8784313725490196" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.87843137250000003" green="0.87843137250000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="w46-D8-2Kb" secondAttribute="trailing" id="NYO-SE-ewY"/>
                             <constraint firstItem="uuQ-j0-01u" firstAttribute="top" secondItem="w46-D8-2Kb" secondAttribute="bottom" id="fKU-nw-B6p"/>
@@ -164,11 +164,11 @@
                                 <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gby-24-CEY" id="TXs-CF-Fb1">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Value" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ziK-Va-TQV">
-                                            <rect key="frame" x="248" y="0.0" width="64" height="44"/>
+                                            <rect key="frame" x="236" y="0.0" width="64" height="44"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="64" id="1ER-0N-UWv"/>
@@ -177,44 +177,67 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OMW-YK-Iw9" userLabel="Favourite">
-                                            <rect key="frame" x="8" y="8" width="27.5" height="27.5"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" secondItem="OMW-YK-Iw9" secondAttribute="height" multiplier="1:1" id="QYQ-ti-pl0"/>
-                                            </constraints>
-                                            <state key="normal" image="heartIcon">
-                                                <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                            </state>
-                                            <connections>
-                                                <action selector="toggleFavourite:" destination="gby-24-CEY" eventType="touchUpInside" id="2t8-d4-8na"/>
-                                            </connections>
-                                        </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GKA-y7-MTF">
-                                            <rect key="frame" x="43.5" y="0.0" width="196.5" height="44"/>
+                                            <rect key="frame" x="55" y="0.0" width="173" height="44"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J6y-sJ-tsy" userLabel="Button Container">
+                                            <rect key="frame" x="20" y="8" width="27" height="27"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ywx-Hj-MNy" userLabel="Select">
+                                                    <rect key="frame" x="0.0" y="0.0" width="27" height="27"/>
+                                                    <state key="normal" image="checkedIcon"/>
+                                                    <connections>
+                                                        <action selector="pressButtonSelect:" destination="gby-24-CEY" eventType="touchUpInside" id="kyG-iH-2MM"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OMW-YK-Iw9" userLabel="Favourite">
+                                                    <rect key="frame" x="0.0" y="0.0" width="27" height="27"/>
+                                                    <state key="normal" image="heartIcon">
+                                                        <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="pressButtonFavourite:" destination="gby-24-CEY" eventType="touchUpInside" id="eug-Qa-OQ4"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstItem="OMW-YK-Iw9" firstAttribute="top" secondItem="J6y-sJ-tsy" secondAttribute="top" id="8xG-Wn-tVC"/>
+                                                <constraint firstItem="Ywx-Hj-MNy" firstAttribute="top" secondItem="J6y-sJ-tsy" secondAttribute="top" id="E8e-vU-Jal"/>
+                                                <constraint firstAttribute="bottom" secondItem="Ywx-Hj-MNy" secondAttribute="bottom" id="Ecc-Nh-5se"/>
+                                                <constraint firstItem="Ywx-Hj-MNy" firstAttribute="leading" secondItem="J6y-sJ-tsy" secondAttribute="leading" id="IOn-Se-pnR"/>
+                                                <constraint firstItem="OMW-YK-Iw9" firstAttribute="leading" secondItem="J6y-sJ-tsy" secondAttribute="leading" id="Nd6-G3-SZ4"/>
+                                                <constraint firstAttribute="trailing" secondItem="OMW-YK-Iw9" secondAttribute="trailing" id="cPR-71-JPh"/>
+                                                <constraint firstAttribute="width" secondItem="J6y-sJ-tsy" secondAttribute="height" multiplier="1:1" id="itb-gF-tGT"/>
+                                                <constraint firstAttribute="trailing" secondItem="Ywx-Hj-MNy" secondAttribute="trailing" id="pVi-jk-zLU"/>
+                                                <constraint firstAttribute="bottom" secondItem="OMW-YK-Iw9" secondAttribute="bottom" id="yEo-QK-vAm"/>
+                                            </constraints>
+                                        </view>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="OMW-YK-Iw9" firstAttribute="top" secondItem="TXs-CF-Fb1" secondAttribute="top" constant="8" id="9F2-YD-lJk"/>
-                                        <constraint firstAttribute="bottom" secondItem="OMW-YK-Iw9" secondAttribute="bottom" constant="8" id="YkI-3Y-klh"/>
+                                        <constraint firstAttribute="bottom" secondItem="J6y-sJ-tsy" secondAttribute="bottom" constant="8" id="Juy-eI-qbn"/>
+                                        <constraint firstItem="GKA-y7-MTF" firstAttribute="leading" secondItem="J6y-sJ-tsy" secondAttribute="trailing" constant="8" id="K4G-Ut-ZCf"/>
                                         <constraint firstItem="ziK-Va-TQV" firstAttribute="leading" secondItem="GKA-y7-MTF" secondAttribute="trailing" constant="8" id="ZQd-7f-v2f"/>
                                         <constraint firstItem="ziK-Va-TQV" firstAttribute="top" secondItem="TXs-CF-Fb1" secondAttribute="top" id="aXL-r0-s3K"/>
-                                        <constraint firstItem="OMW-YK-Iw9" firstAttribute="leading" secondItem="TXs-CF-Fb1" secondAttribute="leading" constant="8" id="hrn-u0-NMk"/>
                                         <constraint firstAttribute="bottom" secondItem="ziK-Va-TQV" secondAttribute="bottom" id="jZM-2d-PpX"/>
-                                        <constraint firstAttribute="trailing" secondItem="ziK-Va-TQV" secondAttribute="trailing" constant="8" id="oNS-xu-HmB"/>
+                                        <constraint firstItem="J6y-sJ-tsy" firstAttribute="top" secondItem="TXs-CF-Fb1" secondAttribute="top" constant="8" id="nph-kN-geH"/>
+                                        <constraint firstAttribute="trailing" secondItem="ziK-Va-TQV" secondAttribute="trailing" constant="20" symbolic="YES" id="oNS-xu-HmB"/>
+                                        <constraint firstItem="J6y-sJ-tsy" firstAttribute="leading" secondItem="TXs-CF-Fb1" secondAttribute="leading" constant="20" symbolic="YES" id="pe7-gZ-cGx"/>
                                         <constraint firstItem="GKA-y7-MTF" firstAttribute="top" secondItem="TXs-CF-Fb1" secondAttribute="top" id="rnd-0n-5aH"/>
                                         <constraint firstAttribute="bottom" secondItem="GKA-y7-MTF" secondAttribute="bottom" id="vxl-DH-QVx"/>
-                                        <constraint firstItem="GKA-y7-MTF" firstAttribute="leading" secondItem="OMW-YK-Iw9" secondAttribute="trailing" constant="8" id="xxL-kQ-UI7"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <gestureRecognizers/>
                                 <connections>
                                     <outlet property="buttonFavourite" destination="OMW-YK-Iw9" id="BB4-sS-4SL"/>
+                                    <outlet property="buttonSelect" destination="Ywx-Hj-MNy" id="IS3-hQ-Lff"/>
                                     <outlet property="labelText" destination="GKA-y7-MTF" id="dLA-ng-PZg"/>
                                     <outlet property="labelValue" destination="ziK-Va-TQV" id="F56-Wb-g8z"/>
-                                    <segue destination="bLS-5c-V27" kind="show" identifier="detailSegue" id="M8O-E0-So0"/>
+                                    <segue destination="bLS-5c-V27" kind="show" identifier="detailSegue" id="HkS-1u-KLE"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -338,6 +361,14 @@
                             <constraint firstItem="Zh8-xw-uP0" firstAttribute="top" secondItem="3aB-tA-zfx" secondAttribute="bottom" id="mhw-xI-fjL"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="JK9-fF-yaf">
+                        <barButtonItem key="rightBarButtonItem" image="checkedIcon" id="2jh-Jx-X1x">
+                            <connections>
+                                <action selector="startComparison:" destination="bLS-5c-V27" id="Lbb-xx-4on"/>
+                                <segue destination="8mx-92-yk8" kind="show" id="auP-Ys-l7O"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="imageView" destination="wa4-kz-EBX" id="VkR-70-rCH"/>
                         <outlet property="labelName" destination="Dsr-HO-x7j" id="9DO-Ig-nxS"/>
@@ -352,7 +383,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1845" y="241.90140845070422"/>
+            <point key="canvasLocation" x="1824" y="242"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="sYK-Oh-dq2">
@@ -375,10 +406,11 @@
     </scenes>
     <resources>
         <image name="AppLogo" width="2400" height="1443"/>
+        <image name="checkedIcon" width="22" height="22"/>
         <image name="heartBarButton" width="22" height="22"/>
         <image name="heartIcon" width="128" height="128"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="aIB-0E-yyg"/>
+        <segue reference="auP-Ys-l7O"/>
     </inferredMetricsTieBreakers>
 </document>

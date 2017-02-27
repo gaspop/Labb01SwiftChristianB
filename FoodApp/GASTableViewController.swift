@@ -11,19 +11,34 @@ import UIKit
 class GASTableViewCell : UITableViewCell {
     
     
+    @IBOutlet weak var buttonSelect: UIButton!
     @IBOutlet weak var buttonFavourite: UIButton!
     @IBOutlet weak var labelText: UILabel!
     @IBOutlet weak var labelValue: UILabel!
+    
     weak var table : GASTableViewController!
     var food : APIFood!
     
-    @IBAction func toggleFavourite(_ sender: UIButton) {
+    @IBAction func pressButtonFavourite(_ sender: UIButton) {
         food.toggleFavouriteStatus()
         toggleButtonFavouriteColor()
         if (table.tableMode == .Favourites) {
             table.updateFavouritesData()
         }
     }
+    
+    @IBAction func pressButtonSelect(_ sender: UIButton) {
+        for (index,item) in table.selected.enumerated() {
+            if item.number == food.number {
+                table.selected.remove(at: index)
+                toggleButtonCheckedColor()
+                return
+            }
+        }
+        table.selected.append(food)
+        toggleButtonCheckedColor()
+    }
+    
     
     func toggleButtonFavouriteColor() {
         //buttonFavourite.tintColor = UIColor.red
@@ -32,12 +47,23 @@ class GASTableViewCell : UITableViewCell {
             buttonFavourite.setImage(image, for: .normal)
             buttonFavourite.tintColor = UIColor.red
         } else {
-            let image = UIImage(named: "heartIcon")?.withRenderingMode(.alwaysOriginal)
+            //let image = UIImage(named: "heartIcon")?.withRenderingMode(.alwaysOriginal)
+            let image = UIImage(named: "heartIcon")?.withRenderingMode(.alwaysTemplate)
             buttonFavourite.setImage(image, for: .normal)
-            buttonFavourite.tintColor = UIColor.white
+            buttonFavourite.tintColor = UIColor.lightGray
         }
     }
     
+    func toggleButtonCheckedColor() {
+        if table.isItemSelected(food) {
+            let image = UIImage(named: "checkedIcon")?.withRenderingMode(.alwaysOriginal)
+            buttonSelect.setImage(image, for: .normal)
+        } else {
+            let image = UIImage(named: "checkedIcon")?.withRenderingMode(.alwaysTemplate)
+            buttonSelect.setImage(image, for: .normal)
+            buttonSelect.tintColor = UIColor.lightGray
+        }
+    }
     
 }
 
@@ -70,12 +96,14 @@ class GASTableViewController: UITableViewController, UISearchResultsUpdating {
         return tableData.count
     }
     
-    var sentRequests : Int = 0
     var checkedRangeMin : Int = 0
     var checkedRangeMax : Int = 0
     var lastRowIndex : Int = 0
     let rowRange : Int = 20
-
+    
+    var selected : [APIFood] = []
+    var isSelecting : Bool = false
+    
     enum Mode {
         case Normal, Search, Favourites
     }
@@ -99,6 +127,15 @@ class GASTableViewController: UITableViewController, UISearchResultsUpdating {
         return searchController.isActive && !(searchController.searchBar.text ?? "").isEmpty
     }
     
+    func isItemSelected(_ food: APIFood) -> Bool {
+        for item in selected {
+            if item.number == food.number {
+                return true
+            }
+        }
+        return false
+    }
+    
     func resetTableRange() {
         checkedRangeMin = 0
         checkedRangeMax = 0
@@ -107,6 +144,10 @@ class GASTableViewController: UITableViewController, UISearchResultsUpdating {
     
     func updateFavouritesData() {
         _favouritesData = UserData.favourites
+        tableView.reloadData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         tableView.reloadData()
     }
     
@@ -145,7 +186,6 @@ class GASTableViewController: UITableViewController, UISearchResultsUpdating {
         resetTableRange()
         tableView.reloadData()
     }
-    
 
     // MARK: - Table view data source
 
@@ -167,13 +207,7 @@ class GASTableViewController: UITableViewController, UISearchResultsUpdating {
         }
         
         cell.food = tableData[row]
-        /*
-        if tableMode == Mode.Normal {
-            cell.food = data[row]
-        } else if tableMode == Mode.Search {
-            cell.food = searchData[row]
-        }
-        */
+
         if row <= checkedRangeMin {
             checkedRangeMin = max(0, row - rowRange)
             requestDetailsWithRange(checkedRangeMin, row)
@@ -184,12 +218,6 @@ class GASTableViewController: UITableViewController, UISearchResultsUpdating {
             requestDetailsWithRange(row, checkedRangeMax)
             print("down range")
         }
-        /*if indexPath.row >= lastRowIndex {
-            print("lastRowIndex Before: \(lastRowIndex)  vs. \(indexPath.row + rowRange)" )
-            requestDetailsWithRange(lastRowIndex, lastRowIndex + rowRange)
-            lastRowIndex = min(lastRowIndex + rowRange, data.count - 1)
-            print("lastRowIndex After: \(lastRowIndex)  vs. \(indexPath.row + rowRange)" )
-        }*/
 
         cell.labelText.text = cell.food.name
         if cell.food.details != nil {
@@ -200,7 +228,16 @@ class GASTableViewController: UITableViewController, UISearchResultsUpdating {
                 self.tableView.reloadData()
             }*/
         }
-        cell.toggleButtonFavouriteColor()
+        
+        if isSelecting {
+            cell.buttonFavourite.isHidden = true
+            cell.buttonSelect.isHidden = false
+            cell.toggleButtonCheckedColor()
+        } else {
+            cell.buttonFavourite.isHidden = false
+            cell.buttonSelect.isHidden = true
+            cell.toggleButtonFavouriteColor()
+        }
         
         previousTableMode = tableMode
         
@@ -215,15 +252,7 @@ class GASTableViewController: UITableViewController, UISearchResultsUpdating {
         for index in fromSafe...toSafe {
             tableData[index].getDetails() {
                 param in
-                /*if let requestSent = b as Bool? {
-                    self.sentRequests += 1
-                }*/
-                /*if param.0 {
-                    param.1()
-                }*/
-                if (index == toSafe) {
-                    self.tableView.reloadData()
-                }
+                self.tableView.reloadData()
             }
         }
         print("requestDetailWithRange: \(fromSafe) to \(toSafe)")
@@ -269,11 +298,14 @@ class GASTableViewController: UITableViewController, UISearchResultsUpdating {
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
+        print ("Prepare for segue '\(segue.identifier)'")
+
         if segue.identifier == "detailSegue",
            let target = segue.destination as? GASDetailViewController,
            let row = tableView.indexPathForSelectedRow?.row {
+            print("Preparing segue '\(segue.identifier)': Row = \(row)")
             target.food = tableData[row]
+            target.tableView = self
         }
 
     }

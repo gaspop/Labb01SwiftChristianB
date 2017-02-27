@@ -15,6 +15,8 @@ class GASDetailViewController: UIViewController, UIImagePickerControllerDelegate
     @IBOutlet weak var textInformation: UITextView!
     @IBOutlet weak var textValues: UITextView!
     
+    weak var tableView : GASTableViewController?
+    
     var food : APIFood!
     var input : String?
     
@@ -30,6 +32,14 @@ class GASDetailViewController: UIViewController, UIImagePickerControllerDelegate
             fatalError("No documents directory.")
         }
     }
+    
+    @IBAction func startComparison(_ sender: UIBarButtonItem) {
+        tableView?.isSelecting = true
+        //navigationController!.popViewController(animated: true)
+        //dismiss(animated: true)
+        //print("Blep")
+    }
+    
     
     override func viewWillAppear(_ animated: Bool) {
         displayFoodImage()
@@ -104,14 +114,19 @@ class GASDetailViewController: UIViewController, UIImagePickerControllerDelegate
         picker.dismiss(animated: true, completion: nil)
     }
     
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        /*
+        var target = segue.destination as! GASTableViewController
+        target = self.tableView!
+        target.isSelecting = true
+        */
     }
-    */
+    
 
 }
