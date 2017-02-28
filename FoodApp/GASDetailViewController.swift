@@ -33,11 +33,12 @@ class GASDetailViewController: UIViewController, UIImagePickerControllerDelegate
         }
     }
     
-    @IBAction func startComparison(_ sender: UIBarButtonItem) {
-        tableView?.isSelecting = true
+    @IBAction func compare(_ sender: UIBarButtonItem) {
+        //tableView?.isSelecting = true
         //navigationController!.popViewController(animated: true)
         //dismiss(animated: true)
         //print("Blep")
+        performSegue(withIdentifier: "compare", sender: sender)
     }
     
     

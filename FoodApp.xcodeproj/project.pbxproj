@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F92F8F81FAA8A57F875E8C7 /* Pods_FoodApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9F4A1D94314BF8BEB16C9F1 /* Pods_FoodApp.framework */; };
 		370822DC1E51FFE100CDFC4A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 370822DB1E51FFE100CDFC4A /* AppDelegate.swift */; };
 		370822E11E51FFE100CDFC4A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 370822DF1E51FFE100CDFC4A /* Main.storyboard */; };
 		370822E31E51FFE100CDFC4A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 370822E21E51FFE100CDFC4A /* Assets.xcassets */; };
@@ -15,6 +16,8 @@
 		376C33381E532A0D00919B14 /* GASTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376C33371E532A0D00919B14 /* GASTableViewController.swift */; };
 		376C333A1E532F7500919B14 /* GASDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376C33391E532F7500919B14 /* GASDetailViewController.swift */; };
 		378471681E6051F500028EDD /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378471671E6051F500028EDD /* UserData.swift */; };
+		37934AA11E65CC7300FC50CC /* Diagram.m in Sources */ = {isa = PBXBuildFile; fileRef = 37934AA01E65CC7300FC50CC /* Diagram.m */; };
+		37934AA31E65CD3500FC50CC /* GASCompareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37934AA21E65CD3500FC50CC /* GASCompareViewController.swift */; };
 		37A340941E5B4113006466C6 /* APIParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A340931E5B4113006466C6 /* APIParser.swift */; };
 		37A4CECD1E5C910E004A1EF9 /* APIFood.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A4CECC1E5C910E004A1EF9 /* APIFood.swift */; };
 /* End PBXBuildFile section */
@@ -30,8 +33,15 @@
 		376C33371E532A0D00919B14 /* GASTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GASTableViewController.swift; sourceTree = "<group>"; };
 		376C33391E532F7500919B14 /* GASDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GASDetailViewController.swift; sourceTree = "<group>"; };
 		378471671E6051F500028EDD /* UserData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
+		37934A9E1E65CC7300FC50CC /* FoodApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FoodApp-Bridging-Header.h"; sourceTree = "<group>"; };
+		37934A9F1E65CC7300FC50CC /* Diagram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Diagram.h; sourceTree = "<group>"; };
+		37934AA01E65CC7300FC50CC /* Diagram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Diagram.m; sourceTree = "<group>"; };
+		37934AA21E65CD3500FC50CC /* GASCompareViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GASCompareViewController.swift; sourceTree = "<group>"; };
 		37A340931E5B4113006466C6 /* APIParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIParser.swift; sourceTree = "<group>"; };
 		37A4CECC1E5C910E004A1EF9 /* APIFood.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIFood.swift; sourceTree = "<group>"; };
+		9B4723EDBCB7DA135C97C36C /* Pods-FoodApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FoodApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-FoodApp/Pods-FoodApp.release.xcconfig"; sourceTree = "<group>"; };
+		A9F4A1D94314BF8BEB16C9F1 /* Pods_FoodApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FoodApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DE727E57D29B26B8E2BF3956 /* Pods-FoodApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FoodApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FoodApp/Pods-FoodApp.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,6 +49,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F92F8F81FAA8A57F875E8C7 /* Pods_FoodApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -50,6 +61,8 @@
 			children = (
 				370822DA1E51FFE100CDFC4A /* FoodApp */,
 				370822D91E51FFE100CDFC4A /* Products */,
+				459945A8C401D83363E51E35 /* Pods */,
+				59AA181EEEE5F08DF8DA1325 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -68,15 +81,36 @@
 				372718771E55F2E30006F8E2 /* GASMainViewController.swift */,
 				376C33371E532A0D00919B14 /* GASTableViewController.swift */,
 				376C33391E532F7500919B14 /* GASDetailViewController.swift */,
+				37934AA21E65CD3500FC50CC /* GASCompareViewController.swift */,
 				37A340931E5B4113006466C6 /* APIParser.swift */,
 				37A4CECC1E5C910E004A1EF9 /* APIFood.swift */,
 				378471671E6051F500028EDD /* UserData.swift */,
+				37934A9F1E65CC7300FC50CC /* Diagram.h */,
+				37934AA01E65CC7300FC50CC /* Diagram.m */,
 				370822DF1E51FFE100CDFC4A /* Main.storyboard */,
 				370822E21E51FFE100CDFC4A /* Assets.xcassets */,
 				370822E41E51FFE100CDFC4A /* LaunchScreen.storyboard */,
 				370822E71E51FFE100CDFC4A /* Info.plist */,
+				37934A9E1E65CC7300FC50CC /* FoodApp-Bridging-Header.h */,
 			);
 			path = FoodApp;
+			sourceTree = "<group>";
+		};
+		459945A8C401D83363E51E35 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				DE727E57D29B26B8E2BF3956 /* Pods-FoodApp.debug.xcconfig */,
+				9B4723EDBCB7DA135C97C36C /* Pods-FoodApp.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		59AA181EEEE5F08DF8DA1325 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A9F4A1D94314BF8BEB16C9F1 /* Pods_FoodApp.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -86,9 +120,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 370822EA1E51FFE100CDFC4A /* Build configuration list for PBXNativeTarget "FoodApp" */;
 			buildPhases = (
+				45038190FD18664EF712C013 /* [CP] Check Pods Manifest.lock */,
 				370822D41E51FFE100CDFC4A /* Sources */,
 				370822D51E51FFE100CDFC4A /* Frameworks */,
 				370822D61E51FFE100CDFC4A /* Resources */,
+				4C893587726D80F361D4E36C /* [CP] Embed Pods Frameworks */,
+				D80F8A885B99F0282385B8F4 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -111,6 +148,7 @@
 				TargetAttributes = {
 					370822D71E51FFE100CDFC4A = {
 						CreatedOnToolsVersion = 8.2.1;
+						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -146,14 +184,64 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		45038190FD18664EF712C013 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		4C893587726D80F361D4E36C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FoodApp/Pods-FoodApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D80F8A885B99F0282385B8F4 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-FoodApp/Pods-FoodApp-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		370822D41E51FFE100CDFC4A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				376C33381E532A0D00919B14 /* GASTableViewController.swift in Sources */,
+				37934AA11E65CC7300FC50CC /* Diagram.m in Sources */,
 				372718781E55F2E30006F8E2 /* GASMainViewController.swift in Sources */,
 				378471681E6051F500028EDD /* UserData.swift in Sources */,
+				37934AA31E65CD3500FC50CC /* GASCompareViewController.swift in Sources */,
 				370822DC1E51FFE100CDFC4A /* AppDelegate.swift in Sources */,
 				37A340941E5B4113006466C6 /* APIParser.swift in Sources */,
 				376C333A1E532F7500919B14 /* GASDetailViewController.swift in Sources */,
@@ -276,24 +364,31 @@
 		};
 		370822EB1E51FFE100CDFC4A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DE727E57D29B26B8E2BF3956 /* Pods-FoodApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = FoodApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.gaspop.FoodApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "FoodApp/FoodApp-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		370822EC1E51FFE100CDFC4A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9B4723EDBCB7DA135C97C36C /* Pods-FoodApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = FoodApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.gaspop.FoodApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "FoodApp/FoodApp-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

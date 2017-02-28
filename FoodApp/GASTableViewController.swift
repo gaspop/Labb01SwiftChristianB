@@ -7,11 +7,13 @@
 //
 
 import UIKit
+import BEMCheckBox
 
-class GASTableViewCell : UITableViewCell {
+class GASTableViewCell : UITableViewCell, BEMCheckBoxDelegate {
     
+    @IBOutlet weak var buttonSelect: BEMCheckBox!
     
-    @IBOutlet weak var buttonSelect: UIButton!
+    //@IBOutlet weak var buttonSelect: UIButton!
     @IBOutlet weak var buttonFavourite: UIButton!
     @IBOutlet weak var labelText: UILabel!
     @IBOutlet weak var labelValue: UILabel!
@@ -21,47 +23,46 @@ class GASTableViewCell : UITableViewCell {
     
     @IBAction func pressButtonFavourite(_ sender: UIButton) {
         food.toggleFavouriteStatus()
-        toggleButtonFavouriteColor()
+        setButtonFavouriteStatus()
         if (table.tableMode == .Favourites) {
             table.updateFavouritesData()
         }
     }
     
-    @IBAction func pressButtonSelect(_ sender: UIButton) {
+    func didTap(_ checkBox: BEMCheckBox) {
+        toggleSelectedStatus()
+    }
+    
+    func toggleSelectedStatus() {
         for (index,item) in table.selected.enumerated() {
             if item.number == food.number {
                 table.selected.remove(at: index)
-                toggleButtonCheckedColor()
+                setButtonSelectedStatus()
                 return
             }
         }
-        table.selected.append(food)
-        toggleButtonCheckedColor()
+        if table.selected.count < table.maxSelected {
+            table.selected.append(food)
+        }
+        setButtonSelectedStatus()
     }
     
     
-    func toggleButtonFavouriteColor() {
-        //buttonFavourite.tintColor = UIColor.red
+    func setButtonFavouriteStatus() {
+        let image = UIImage(named: "heartIcon")?.withRenderingMode(.alwaysTemplate)
+        buttonFavourite.setImage(image, for: .normal)
         if food.isFavourite {
-            let image = UIImage(named: "heartIcon")?.withRenderingMode(.alwaysTemplate)
-            buttonFavourite.setImage(image, for: .normal)
             buttonFavourite.tintColor = UIColor.red
         } else {
-            //let image = UIImage(named: "heartIcon")?.withRenderingMode(.alwaysOriginal)
-            let image = UIImage(named: "heartIcon")?.withRenderingMode(.alwaysTemplate)
-            buttonFavourite.setImage(image, for: .normal)
             buttonFavourite.tintColor = UIColor.lightGray
         }
     }
     
-    func toggleButtonCheckedColor() {
+    func setButtonSelectedStatus() {
         if table.isItemSelected(food) {
-            let image = UIImage(named: "checkedIcon")?.withRenderingMode(.alwaysOriginal)
-            buttonSelect.setImage(image, for: .normal)
+            buttonSelect.on = true
         } else {
-            let image = UIImage(named: "checkedIcon")?.withRenderingMode(.alwaysTemplate)
-            buttonSelect.setImage(image, for: .normal)
-            buttonSelect.tintColor = UIColor.lightGray
+            buttonSelect.on = false
         }
     }
     
@@ -74,7 +75,6 @@ class GASTableViewController: UITableViewController, UISearchResultsUpdating {
     var searchController : UISearchController!
 
     @IBOutlet weak var barButtonFavourites: UIBarButtonItem!
-    
     
     var data : [APIFood] = []
     var searchData : [APIFood] = []
@@ -101,6 +101,7 @@ class GASTableViewController: UITableViewController, UISearchResultsUpdating {
     var lastRowIndex : Int = 0
     let rowRange : Int = 20
     
+    let maxSelected : Int = 7
     var selected : [APIFood] = []
     var isSelecting : Bool = false
     
@@ -187,6 +188,10 @@ class GASTableViewController: UITableViewController, UISearchResultsUpdating {
         tableView.reloadData()
     }
 
+    @IBAction func toggleSelectItems(_ sender: UIBarButtonItem) {
+        isSelecting = !isSelecting
+        tableView.reloadData()
+    }
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -201,6 +206,7 @@ class GASTableViewController: UITableViewController, UISearchResultsUpdating {
         let row = indexPath.row
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! GASTableViewCell
         cell.table = self
+        cell.buttonSelect.delegate = cell
         
         if (previousTableMode != tableMode) {
             resetTableRange()
@@ -211,12 +217,12 @@ class GASTableViewController: UITableViewController, UISearchResultsUpdating {
         if row <= checkedRangeMin {
             checkedRangeMin = max(0, row - rowRange)
             requestDetailsWithRange(checkedRangeMin, row)
-            print("up range")
+            //print("up range")
         }
         if row >= checkedRangeMax {
             checkedRangeMax = min(row + rowRange, tableDataCount - 1)
             requestDetailsWithRange(row, checkedRangeMax)
-            print("down range")
+            //print("down range")
         }
 
         cell.labelText.text = cell.food.name
@@ -224,19 +230,16 @@ class GASTableViewController: UITableViewController, UISearchResultsUpdating {
             cell.labelValue.text = "\(Int(cell.food.energy))"
         } else {
             cell.labelValue.text = "-"
-            /*self.data[indexPath.row].getDetails() {
-                self.tableView.reloadData()
-            }*/
         }
-        
+    
         if isSelecting {
             cell.buttonFavourite.isHidden = true
             cell.buttonSelect.isHidden = false
-            cell.toggleButtonCheckedColor()
+            cell.setButtonSelectedStatus()
         } else {
             cell.buttonFavourite.isHidden = false
             cell.buttonSelect.isHidden = true
-            cell.toggleButtonFavouriteColor()
+            cell.setButtonFavouriteStatus()
         }
         
         previousTableMode = tableMode
@@ -255,7 +258,7 @@ class GASTableViewController: UITableViewController, UISearchResultsUpdating {
                 self.tableView.reloadData()
             }
         }
-        print("requestDetailWithRange: \(fromSafe) to \(toSafe)")
+        //print("requestDetailWithRange: \(fromSafe) to \(toSafe)")
     }
 
     /*

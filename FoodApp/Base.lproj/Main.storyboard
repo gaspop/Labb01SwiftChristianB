@@ -7,7 +7,9 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -128,7 +130,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="dFi-JD-Oli">
-                        <barButtonItem key="rightBarButtonItem" image="heartBarButton" id="e01-93-EZe">
+                        <barButtonItem key="rightBarButtonItem" image="heartBarIcon" id="e01-93-EZe">
                             <connections>
                                 <action selector="toggleShowFavourites:" destination="8mx-92-yk8" id="i04-Nv-ZNB"/>
                                 <segue destination="8mx-92-yk8" kind="show" identifier="showFavourites" id="aIB-0E-yyg"/>
@@ -164,7 +166,7 @@
                                 <rect key="frame" x="0.0" y="28" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gby-24-CEY" id="TXs-CF-Fb1">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Value" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ziK-Va-TQV">
@@ -185,15 +187,12 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J6y-sJ-tsy" userLabel="Button Container">
-                                            <rect key="frame" x="20" y="8" width="27" height="27"/>
+                                            <rect key="frame" x="8" y="8" width="27" height="27"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ywx-Hj-MNy" userLabel="Select">
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JCT-iv-Ycu" userLabel="Select" customClass="BEMCheckBox">
                                                     <rect key="frame" x="0.0" y="0.0" width="27" height="27"/>
-                                                    <state key="normal" image="checkedIcon"/>
-                                                    <connections>
-                                                        <action selector="pressButtonSelect:" destination="gby-24-CEY" eventType="touchUpInside" id="kyG-iH-2MM"/>
-                                                    </connections>
-                                                </button>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </view>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OMW-YK-Iw9" userLabel="Favourite">
                                                     <rect key="frame" x="0.0" y="0.0" width="27" height="27"/>
                                                     <state key="normal" image="heartIcon">
@@ -206,27 +205,27 @@
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
+                                                <constraint firstItem="JCT-iv-Ycu" firstAttribute="top" secondItem="J6y-sJ-tsy" secondAttribute="top" id="16a-ps-B0b"/>
                                                 <constraint firstItem="OMW-YK-Iw9" firstAttribute="top" secondItem="J6y-sJ-tsy" secondAttribute="top" id="8xG-Wn-tVC"/>
-                                                <constraint firstItem="Ywx-Hj-MNy" firstAttribute="top" secondItem="J6y-sJ-tsy" secondAttribute="top" id="E8e-vU-Jal"/>
-                                                <constraint firstAttribute="bottom" secondItem="Ywx-Hj-MNy" secondAttribute="bottom" id="Ecc-Nh-5se"/>
-                                                <constraint firstItem="Ywx-Hj-MNy" firstAttribute="leading" secondItem="J6y-sJ-tsy" secondAttribute="leading" id="IOn-Se-pnR"/>
+                                                <constraint firstItem="JCT-iv-Ycu" firstAttribute="leading" secondItem="J6y-sJ-tsy" secondAttribute="leading" id="Aeh-Hg-DvE"/>
+                                                <constraint firstAttribute="bottom" secondItem="JCT-iv-Ycu" secondAttribute="bottom" id="B0Z-va-yGw"/>
                                                 <constraint firstItem="OMW-YK-Iw9" firstAttribute="leading" secondItem="J6y-sJ-tsy" secondAttribute="leading" id="Nd6-G3-SZ4"/>
                                                 <constraint firstAttribute="trailing" secondItem="OMW-YK-Iw9" secondAttribute="trailing" id="cPR-71-JPh"/>
                                                 <constraint firstAttribute="width" secondItem="J6y-sJ-tsy" secondAttribute="height" multiplier="1:1" id="itb-gF-tGT"/>
-                                                <constraint firstAttribute="trailing" secondItem="Ywx-Hj-MNy" secondAttribute="trailing" id="pVi-jk-zLU"/>
                                                 <constraint firstAttribute="bottom" secondItem="OMW-YK-Iw9" secondAttribute="bottom" id="yEo-QK-vAm"/>
+                                                <constraint firstAttribute="trailing" secondItem="JCT-iv-Ycu" secondAttribute="trailing" id="yHh-eI-PhR"/>
                                             </constraints>
                                         </view>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="bottom" secondItem="J6y-sJ-tsy" secondAttribute="bottom" constant="8" id="Juy-eI-qbn"/>
-                                        <constraint firstItem="GKA-y7-MTF" firstAttribute="leading" secondItem="J6y-sJ-tsy" secondAttribute="trailing" constant="8" id="K4G-Ut-ZCf"/>
+                                        <constraint firstItem="GKA-y7-MTF" firstAttribute="leading" secondItem="J6y-sJ-tsy" secondAttribute="trailing" constant="20" id="K4G-Ut-ZCf"/>
                                         <constraint firstItem="ziK-Va-TQV" firstAttribute="leading" secondItem="GKA-y7-MTF" secondAttribute="trailing" constant="8" id="ZQd-7f-v2f"/>
                                         <constraint firstItem="ziK-Va-TQV" firstAttribute="top" secondItem="TXs-CF-Fb1" secondAttribute="top" id="aXL-r0-s3K"/>
                                         <constraint firstAttribute="bottom" secondItem="ziK-Va-TQV" secondAttribute="bottom" id="jZM-2d-PpX"/>
                                         <constraint firstItem="J6y-sJ-tsy" firstAttribute="top" secondItem="TXs-CF-Fb1" secondAttribute="top" constant="8" id="nph-kN-geH"/>
                                         <constraint firstAttribute="trailing" secondItem="ziK-Va-TQV" secondAttribute="trailing" constant="20" symbolic="YES" id="oNS-xu-HmB"/>
-                                        <constraint firstItem="J6y-sJ-tsy" firstAttribute="leading" secondItem="TXs-CF-Fb1" secondAttribute="leading" constant="20" symbolic="YES" id="pe7-gZ-cGx"/>
+                                        <constraint firstItem="J6y-sJ-tsy" firstAttribute="leading" secondItem="TXs-CF-Fb1" secondAttribute="leading" constant="8" id="pe7-gZ-cGx"/>
                                         <constraint firstItem="GKA-y7-MTF" firstAttribute="top" secondItem="TXs-CF-Fb1" secondAttribute="top" id="rnd-0n-5aH"/>
                                         <constraint firstAttribute="bottom" secondItem="GKA-y7-MTF" secondAttribute="bottom" id="vxl-DH-QVx"/>
                                     </constraints>
@@ -234,7 +233,7 @@
                                 <gestureRecognizers/>
                                 <connections>
                                     <outlet property="buttonFavourite" destination="OMW-YK-Iw9" id="BB4-sS-4SL"/>
-                                    <outlet property="buttonSelect" destination="Ywx-Hj-MNy" id="IS3-hQ-Lff"/>
+                                    <outlet property="buttonSelect" destination="JCT-iv-Ycu" id="IjY-wk-d2U"/>
                                     <outlet property="labelText" destination="GKA-y7-MTF" id="dLA-ng-PZg"/>
                                     <outlet property="labelValue" destination="ziK-Va-TQV" id="F56-Wb-g8z"/>
                                     <segue destination="bLS-5c-V27" kind="show" identifier="detailSegue" id="HkS-1u-KLE"/>
@@ -247,12 +246,20 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="HpQ-2s-fMm">
-                        <barButtonItem key="rightBarButtonItem" image="heartBarButton" id="I1a-5w-lKh">
-                            <connections>
-                                <action selector="toggleShowFavourites:" destination="8mx-92-yk8" id="glt-TT-9Si"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem image="heartBarIcon" id="I1a-5w-lKh" userLabel="Favourites">
+                                <connections>
+                                    <action selector="toggleShowFavourites:" destination="8mx-92-yk8" id="glt-TT-9Si"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem image="selectBarIcon" id="MCJ-fl-cfY" userLabel="Select">
+                                <connections>
+                                    <action selector="toggleSelectItems:" destination="8mx-92-yk8" id="onp-9g-6wF"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="barButtonFavourites" destination="I1a-5w-lKh" id="T4x-e0-ae2"/>
                         <outlet property="tableView" destination="zFn-8L-zEI" id="Tv6-ON-p7U"/>
@@ -362,18 +369,19 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="JK9-fF-yaf">
-                        <barButtonItem key="rightBarButtonItem" image="checkedIcon" id="2jh-Jx-X1x">
+                        <barButtonItem key="rightBarButtonItem" image="compareBarIcon" id="2jh-Jx-X1x">
                             <connections>
-                                <action selector="startComparison:" destination="bLS-5c-V27" id="Lbb-xx-4on"/>
-                                <segue destination="8mx-92-yk8" kind="show" id="auP-Ys-l7O"/>
+                                <action selector="compare:" destination="bLS-5c-V27" id="UDk-1G-Soy"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="imageView" destination="wa4-kz-EBX" id="VkR-70-rCH"/>
                         <outlet property="labelName" destination="Dsr-HO-x7j" id="9DO-Ig-nxS"/>
                         <outlet property="textInformation" destination="mWz-7w-YhO" id="BIS-ep-e8r"/>
                         <outlet property="textValues" destination="uBM-4G-j4F" id="LsR-Mh-Fdw"/>
+                        <segue destination="vle-0q-Ude" kind="show" identifier="compare" id="kjU-Rx-rbs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4wa-lE-OSB" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -384,6 +392,63 @@
                 </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1824" y="242"/>
+        </scene>
+        <!--Compare View Controller-->
+        <scene sceneID="9OU-nc-WcG">
+            <objects>
+                <viewController id="vle-0q-Ude" customClass="GASCompareViewController" customModule="FoodApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Qbb-ER-PK6"/>
+                        <viewControllerLayoutGuide type="bottom" id="FXp-6a-Jgq"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="F0n-AE-i6h">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="olS-59-F3n" userLabel="Background">
+                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9nY-8Y-276" customClass="Diagram">
+                                        <rect key="frame" x="8" y="8" width="304" height="252"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="tableInput" value="Ett=2; Två=5; Tre=4.5; Fyra=8"/>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="drawBarOutline" value="YES"/>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="tableValuePadding">
+                                                <real key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="tableTextPadding">
+                                                <real key="value" value="0.0"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="fillWidth" value="YES"/>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="fillHeight" value="YES"/>
+                                        </userDefinedRuntimeAttributes>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="9nY-8Y-276" firstAttribute="leading" secondItem="olS-59-F3n" secondAttribute="leadingMargin" id="4wD-Ae-Qn3"/>
+                                    <constraint firstItem="9nY-8Y-276" firstAttribute="height" secondItem="olS-59-F3n" secondAttribute="height" multiplier="0.5" id="5ww-HG-eDp"/>
+                                    <constraint firstItem="9nY-8Y-276" firstAttribute="trailing" secondItem="olS-59-F3n" secondAttribute="trailingMargin" id="EGO-KO-evO"/>
+                                    <constraint firstItem="9nY-8Y-276" firstAttribute="top" secondItem="olS-59-F3n" secondAttribute="topMargin" id="G8j-OE-Xx3"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="olS-59-F3n" firstAttribute="leading" secondItem="F0n-AE-i6h" secondAttribute="leading" id="0qP-Fl-ocw"/>
+                            <constraint firstItem="olS-59-F3n" firstAttribute="top" secondItem="Qbb-ER-PK6" secondAttribute="bottom" id="SMc-6u-8SM"/>
+                            <constraint firstItem="FXp-6a-Jgq" firstAttribute="top" secondItem="olS-59-F3n" secondAttribute="bottom" id="hBo-j7-7cQ"/>
+                            <constraint firstAttribute="trailing" secondItem="olS-59-F3n" secondAttribute="trailing" id="plH-gM-xTG"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="diagram" destination="9nY-8Y-276" id="fwg-4C-aD2"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VYu-VY-Lc2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2694.375" y="241.90140845070422"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="sYK-Oh-dq2">
@@ -406,11 +471,12 @@
     </scenes>
     <resources>
         <image name="AppLogo" width="2400" height="1443"/>
-        <image name="checkedIcon" width="22" height="22"/>
-        <image name="heartBarButton" width="22" height="22"/>
-        <image name="heartIcon" width="128" height="128"/>
+        <image name="compareBarIcon" width="22" height="22"/>
+        <image name="heartBarIcon" width="22" height="22"/>
+        <image name="heartIcon" width="22" height="22"/>
+        <image name="selectBarIcon" width="22" height="22"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="auP-Ys-l7O"/>
+        <segue reference="Wgh-yx-56w"/>
     </inferredMetricsTieBreakers>
 </document>
