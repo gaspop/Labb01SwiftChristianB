@@ -10,6 +10,13 @@ import Foundation
 
 class APIFood {
     
+    public static let keyName       = "Namn"
+    
+    public static let keyEnergy     = ("Energivärde", "energyKcal")
+    public static let keyProtein    = ("Protein", "protein")
+    public static let keySalt       = ("Salt", "salt")
+    public static let keyWater      = ("Vatten", "water")
+    
     private var _data : [String:Any]
     private(set) var data : [String:Any] {
         get {
@@ -44,16 +51,16 @@ class APIFood {
     
     // Ska det vara energyKj eller energyKcal ?
     var energy : Float {
-        return details!["energyKcal"] as! Float
+        return details![APIFood.keyEnergy.1] as! Float
     }
     var protein : Float {
-        return details!["protein"] as! Float
+        return details![APIFood.keyProtein.1] as! Float
     }
     var salt : Float {
-        return details!["salt"] as! Float
+        return details![APIFood.keySalt.1] as! Float
     }
     var water : Float {
-        return details!["water"] as! Float
+        return details![APIFood.keyWater.1] as! Float
     }
     
     init (data: [String:Any]) {

@@ -308,7 +308,7 @@ class GASTableViewController: UITableViewController, UISearchResultsUpdating {
            let row = tableView.indexPathForSelectedRow?.row {
             print("Preparing segue '\(segue.identifier)': Row = \(row)")
             target.food = tableData[row]
-            target.tableView = self
+            //target.tableView = self
         }
 
     }

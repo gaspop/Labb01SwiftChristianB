@@ -8,17 +8,27 @@
 
 import UIKit
 
-class GASDetailViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class GASDetailTableViewCell : UITableViewCell {
+    
+    @IBOutlet weak var labelName : UILabel!
+    @IBOutlet weak var labelValue : UILabel!
+    
+}
+
+class GASDetailViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource {
+    
+    @IBOutlet weak var tableView: UITableView!
     
     @IBOutlet weak var labelName: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var textInformation: UITextView!
     @IBOutlet weak var textValues: UITextView!
     
-    weak var tableView : GASTableViewController?
+    //weak var tableView : GASTableViewController?
     
     var food : APIFood!
-    var input : String?
+    //var input : String?
+    var foodAsTableData : [(String,String)] = []
     
     let imageDirectory = "/FoodApp/"
     var imageName : String {
@@ -34,13 +44,17 @@ class GASDetailViewController: UIViewController, UIImagePickerControllerDelegate
     }
     
     @IBAction func compare(_ sender: UIBarButtonItem) {
-        //tableView?.isSelecting = true
-        //navigationController!.popViewController(animated: true)
-        //dismiss(animated: true)
-        //print("Blep")
         performSegue(withIdentifier: "compare", sender: sender)
     }
     
+    func convertFoodToTableData() {
+        if food.details != nil {
+            foodAsTableData.append((APIFood.keyEnergy.0,"\(Int(food.energy))"))
+            foodAsTableData.append((APIFood.keyProtein.0,"\(food.protein)"))
+            foodAsTableData.append((APIFood.keySalt.0,"\(food.salt)"))
+            foodAsTableData.append((APIFood.keyWater.0,"\(food.water)"))
+        }
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         displayFoodImage()
@@ -50,8 +64,12 @@ class GASDetailViewController: UIViewController, UIImagePickerControllerDelegate
         super.viewDidLoad()
         
         labelName.text = food.name
-        displayFoodDetails()
+        convertFoodToTableData()
+        tableView.reloadData()
+        //displayFoodDetails()
         // Do any additional setup after loading the view.
+        
+        //detailTableView.add
     }
     
     func displayFoodImage() {
@@ -114,6 +132,35 @@ class GASDetailViewController: UIViewController, UIImagePickerControllerDelegate
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }
+    
+    
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    // Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
+    // Cell gets various attributes set automatically based on table (separators) and data source (accessory views, editing controls)
+        return foodAsTableData.count
+    }
+    
+    
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! GASDetailTableViewCell
+        
+        cell.labelName.text = foodAsTableData[indexPath.row].0
+        cell.labelValue.text = foodAsTableData[indexPath.row].1
+        return cell
+    }
+    
+    public func numberOfSections(in tableView: UITableView) -> Int {
+        // Default is 1 if not implemented
+        return 1
+    }
+    
+    /*
+    public func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Blepp"
+     // fixed font style. use custom view (UILabel) if you want something different
+    }
+    */
+    
     
     
     // MARK: - Navigation
