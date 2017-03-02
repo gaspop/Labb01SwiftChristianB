@@ -20,7 +20,33 @@ class GASFoodChart : GKBarGraph, GKBarGraphDataSource {
         }
     }
     
-    public var valueScale : Double = 10.0
+    public var maxValue : Double = 1000.0
+    
+    public func updateMeasurements() {
+        if let parent = self.superview {
+            self.center = CGPoint(x: parent.frame.width / 2, y: parent.frame.height / 2)
+        } else {
+            self.center = CGPoint(x: self.frame.width / 2, y: self.frame.height / 2)
+        }
+        
+        if data.count > 0 {
+            let marginShare : CGFloat = self.frame.width / 4.0
+            marginBar = marginShare / CGFloat(Double(data.count + 1))
+            barWidth = (self.frame.width - marginShare) / CGFloat(data.count)
+        } else {
+            marginBar = 1.0
+            barWidth = 1.0
+        }
+        
+        let labelHeight : CGFloat = 20.0
+        barHeight = self.frame.height - labelHeight
+        
+    }
+    
+    public override func draw() {
+        updateMeasurements()
+        super.draw()
+    }
     
     /*
     init(frame: CGRect,data:[APIFood]) {
@@ -37,8 +63,10 @@ class GASFoodChart : GKBarGraph, GKBarGraphDataSource {
     }
     
     public func valueForBar(at index: Int) -> NSNumber! {
-        print("Bar \(index) value: \(NSNumber(floatLiteral: Double(data[index].healthyness)))")
-        return NSNumber(floatLiteral: Double(data[index].healthyness))
+        //print("Bar \(index) value: \(NSNumber(floatLiteral: Double(data[index].healthyness)))")
+        let value = NSNumber(floatLiteral: Double(data[index].energy))
+        let scale = value.doubleValue / maxValue
+        return NSNumber(floatLiteral: Double(barHeight) * scale)
     }
     
     public func colorForBar(at index: Int) -> UIColor! {

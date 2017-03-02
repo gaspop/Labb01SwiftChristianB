@@ -24,11 +24,12 @@ class GASCompareViewController: UIViewController {
         chart1.dataSource = chart1
         
         //chart1.marginBar = 0.0
-        //chart1.barWidth = 10.0
-        //chart1.barWidth = chart1.frame.width / CGFloat(chart1.numberOfBars() + 1)
+        //chart1.marginBar = chart1.frame.width /
+        chart1.barWidth = chart1.frame.width / CGFloat(chart1.numberOfBars() + 1)
         //chart1.barHeight = chart1.frame.height
         
         chartView.addSubview(chart1)
+        chart1.center = CGPoint(x: chartView.frame.width / 2,y: chartView.frame.height / 2)
         chart1.draw()
         
         
@@ -36,7 +37,8 @@ class GASCompareViewController: UIViewController {
     }
 
     override func viewDidLayoutSubviews() {
-        //
+        chart1.frame = chartView.frame
+        chart1.draw()
     }
     
 
