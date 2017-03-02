@@ -227,7 +227,7 @@ class GASTableViewController: UITableViewController, UISearchResultsUpdating {
 
         cell.labelText.text = cell.food.name
         if cell.food.details != nil {
-            cell.labelValue.text = "\(Int(cell.food.energy))"
+            cell.labelValue.text = "\(Int(cell.food.energy)) kcal"
         } else {
             cell.labelValue.text = "-"
         }
@@ -308,6 +308,7 @@ class GASTableViewController: UITableViewController, UISearchResultsUpdating {
            let row = tableView.indexPathForSelectedRow?.row {
             print("Preparing segue '\(segue.identifier)': Row = \(row)")
             target.food = tableData[row]
+            target.selected = selected
             //target.tableView = self
         }
 

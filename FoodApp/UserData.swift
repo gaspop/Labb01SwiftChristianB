@@ -12,7 +12,26 @@ private let keyFavouritesIDs = "favouritesIDs"
 private let keyFavourites = "favourites"
 private let keyColor = "color"
 
+private let keySearchWord = "searchWord"
+
 class UserData {
+    
+    static var lastSearchWord : String {
+        get {
+            let defaults = UserDefaults()
+            if let data = defaults.object(forKey: keySearchWord) as? String {
+                return data
+            } else {
+                return ""
+            }
+        }
+        set(word) {
+            let defaults = UserDefaults()
+            defaults.set(word, forKey: keySearchWord)
+            defaults.synchronize()
+        }
+    }
+
     
     static var favouritesIDs : [Int] {
         let defaults = UserDefaults()

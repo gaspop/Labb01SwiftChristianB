@@ -24,6 +24,8 @@ class GASDetailViewController: UIViewController, UIImagePickerControllerDelegate
     @IBOutlet weak var textInformation: UITextView!
     @IBOutlet weak var textValues: UITextView!
     
+    var selected : [APIFood] = []
+    
     //weak var tableView : GASTableViewController?
     
     var food : APIFood!
@@ -53,6 +55,7 @@ class GASDetailViewController: UIViewController, UIImagePickerControllerDelegate
             foodAsTableData.append((APIFood.keyProtein.0,"\(food.protein)"))
             foodAsTableData.append((APIFood.keySalt.0,"\(food.salt)"))
             foodAsTableData.append((APIFood.keyWater.0,"\(food.water)"))
+            foodAsTableData.append((APIFood.keyHealth,"\(food.healthyness)"))
         }
     }
     
@@ -169,11 +172,13 @@ class GASDetailViewController: UIViewController, UIImagePickerControllerDelegate
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        /*
-        var target = segue.destination as! GASTableViewController
-        target = self.tableView!
-        target.isSelecting = true
-        */
+        
+        if segue.identifier == "compare",
+           let target = segue.destination as? GASCompareViewController {
+            target.data.append(food)
+            target.data.append(contentsOf: selected.filter( { f in f.number != food.number } ) )
+        }
+        
     }
     
 

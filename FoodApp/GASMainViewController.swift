@@ -47,11 +47,11 @@ class GASMainViewController: UIViewController {
         //var y = UIKeyboardFrameBeginUserInfoKey
     }
     
-    @IBAction func textSearch(_ sender: UITextField) {
-        /*UIView.animate(withDuration: 0.5) {
-            self.positionSearchField()
-        }*/
-        
+
+    @IBAction func searchTextChanged(_ sender: UITextField) {
+        if let text = sender.text {
+            UserData.lastSearchWord = text
+        }
     }
     
     
@@ -82,6 +82,7 @@ class GASMainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         searchFieldGap = Float(labelSearchFeedback.center.y) - Float(viewSearchWrapper.center.y)
+        textSearchField.text = UserData.lastSearchWord
         // Do any additional setup after loading the view.
     }
     

@@ -7,20 +7,36 @@
 //
 
 import UIKit
+import GraphKit
 //import Diagram
 
 class GASCompareViewController: UIViewController {
-
-    @IBOutlet weak var diagram: Diagram!
+    
+    @IBOutlet weak var chartView: UIView!
+    var chart1 : GASFoodChart!
+    var data : [APIFood] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        chart1 = GASFoodChart(frame: chartView.frame)
+        chart1.data = data
+        chart1.dataSource = chart1
+        
+        //chart1.marginBar = 0.0
+        //chart1.barWidth = 10.0
+        //chart1.barWidth = chart1.frame.width / CGFloat(chart1.numberOfBars() + 1)
+        //chart1.barHeight = chart1.frame.height
+        
+        chartView.addSubview(chart1)
+        chart1.draw()
+        
+        
         // Do any additional setup after loading the view.
     }
 
     override func viewDidLayoutSubviews() {
-        diagram.update()
+        //
     }
     
 

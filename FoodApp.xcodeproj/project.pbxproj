@@ -12,11 +12,11 @@
 		370822E11E51FFE100CDFC4A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 370822DF1E51FFE100CDFC4A /* Main.storyboard */; };
 		370822E31E51FFE100CDFC4A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 370822E21E51FFE100CDFC4A /* Assets.xcassets */; };
 		370822E61E51FFE100CDFC4A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 370822E41E51FFE100CDFC4A /* LaunchScreen.storyboard */; };
+		3722A3531E6818B9000437F6 /* GASFoodChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3722A3521E6818B9000437F6 /* GASFoodChart.swift */; };
 		372718781E55F2E30006F8E2 /* GASMainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372718771E55F2E30006F8E2 /* GASMainViewController.swift */; };
 		376C33381E532A0D00919B14 /* GASTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376C33371E532A0D00919B14 /* GASTableViewController.swift */; };
 		376C333A1E532F7500919B14 /* GASDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376C33391E532F7500919B14 /* GASDetailViewController.swift */; };
 		378471681E6051F500028EDD /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378471671E6051F500028EDD /* UserData.swift */; };
-		37934AA11E65CC7300FC50CC /* Diagram.m in Sources */ = {isa = PBXBuildFile; fileRef = 37934AA01E65CC7300FC50CC /* Diagram.m */; };
 		37934AA31E65CD3500FC50CC /* GASCompareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37934AA21E65CD3500FC50CC /* GASCompareViewController.swift */; };
 		37A340941E5B4113006466C6 /* APIParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A340931E5B4113006466C6 /* APIParser.swift */; };
 		37A4CECD1E5C910E004A1EF9 /* APIFood.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A4CECC1E5C910E004A1EF9 /* APIFood.swift */; };
@@ -29,13 +29,11 @@
 		370822E21E51FFE100CDFC4A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		370822E51E51FFE100CDFC4A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		370822E71E51FFE100CDFC4A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3722A3521E6818B9000437F6 /* GASFoodChart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GASFoodChart.swift; sourceTree = "<group>"; };
 		372718771E55F2E30006F8E2 /* GASMainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GASMainViewController.swift; sourceTree = "<group>"; };
 		376C33371E532A0D00919B14 /* GASTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GASTableViewController.swift; sourceTree = "<group>"; };
 		376C33391E532F7500919B14 /* GASDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GASDetailViewController.swift; sourceTree = "<group>"; };
 		378471671E6051F500028EDD /* UserData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
-		37934A9E1E65CC7300FC50CC /* FoodApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FoodApp-Bridging-Header.h"; sourceTree = "<group>"; };
-		37934A9F1E65CC7300FC50CC /* Diagram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Diagram.h; sourceTree = "<group>"; };
-		37934AA01E65CC7300FC50CC /* Diagram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Diagram.m; sourceTree = "<group>"; };
 		37934AA21E65CD3500FC50CC /* GASCompareViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GASCompareViewController.swift; sourceTree = "<group>"; };
 		37A340931E5B4113006466C6 /* APIParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIParser.swift; sourceTree = "<group>"; };
 		37A4CECC1E5C910E004A1EF9 /* APIFood.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIFood.swift; sourceTree = "<group>"; };
@@ -82,16 +80,14 @@
 				376C33371E532A0D00919B14 /* GASTableViewController.swift */,
 				376C33391E532F7500919B14 /* GASDetailViewController.swift */,
 				37934AA21E65CD3500FC50CC /* GASCompareViewController.swift */,
+				3722A3521E6818B9000437F6 /* GASFoodChart.swift */,
 				37A340931E5B4113006466C6 /* APIParser.swift */,
 				37A4CECC1E5C910E004A1EF9 /* APIFood.swift */,
 				378471671E6051F500028EDD /* UserData.swift */,
-				37934A9F1E65CC7300FC50CC /* Diagram.h */,
-				37934AA01E65CC7300FC50CC /* Diagram.m */,
 				370822DF1E51FFE100CDFC4A /* Main.storyboard */,
 				370822E21E51FFE100CDFC4A /* Assets.xcassets */,
 				370822E41E51FFE100CDFC4A /* LaunchScreen.storyboard */,
 				370822E71E51FFE100CDFC4A /* Info.plist */,
-				37934A9E1E65CC7300FC50CC /* FoodApp-Bridging-Header.h */,
 			);
 			path = FoodApp;
 			sourceTree = "<group>";
@@ -238,12 +234,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				376C33381E532A0D00919B14 /* GASTableViewController.swift in Sources */,
-				37934AA11E65CC7300FC50CC /* Diagram.m in Sources */,
 				372718781E55F2E30006F8E2 /* GASMainViewController.swift in Sources */,
 				378471681E6051F500028EDD /* UserData.swift in Sources */,
 				37934AA31E65CD3500FC50CC /* GASCompareViewController.swift in Sources */,
 				370822DC1E51FFE100CDFC4A /* AppDelegate.swift in Sources */,
 				37A340941E5B4113006466C6 /* APIParser.swift in Sources */,
+				3722A3531E6818B9000437F6 /* GASFoodChart.swift in Sources */,
 				376C333A1E532F7500919B14 /* GASDetailViewController.swift in Sources */,
 				37A4CECD1E5C910E004A1EF9 /* APIFood.swift in Sources */,
 			);
@@ -372,7 +368,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.gaspop.FoodApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "FoodApp/FoodApp-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
@@ -388,7 +384,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.gaspop.FoodApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "FoodApp/FoodApp-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

@@ -17,6 +17,8 @@ class APIFood {
     public static let keySalt       = ("Salt", "salt")
     public static let keyWater      = ("Vatten", "water")
     
+    public static let keyHealth     = ("Nyttighetsvärde")
+    
     private var _data : [String:Any]
     private(set) var data : [String:Any] {
         get {
@@ -61,6 +63,10 @@ class APIFood {
     }
     var water : Float {
         return details![APIFood.keyWater.1] as! Float
+    }
+    
+    var healthyness : Float {
+        return (water / 2) * (salt + 0.01) * (protein + 0.01)
     }
     
     init (data: [String:Any]) {
