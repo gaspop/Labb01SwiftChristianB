@@ -13,7 +13,7 @@ class APIFood {
     public static let keyName       = "Namn"
     
     public static let keyEnergy     = ("Energivärde", "energyKcal")
-    public static let keyProtein    = ("Protein", "protein")
+    public static let keyAlcohol    = ("Alkohol", "alcohol")
     public static let keySalt       = ("Salt", "salt")
     public static let keyWater      = ("Vatten", "water")
     
@@ -55,8 +55,8 @@ class APIFood {
     var energy : Float {
         return details![APIFood.keyEnergy.1] as! Float
     }
-    var protein : Float {
-        return details![APIFood.keyProtein.1] as! Float
+    var alcohol : Float {
+        return details![APIFood.keyAlcohol.1] as! Float
     }
     var salt : Float {
         return details![APIFood.keySalt.1] as! Float
@@ -66,7 +66,7 @@ class APIFood {
     }
     
     var healthyness : Float {
-        return (water / 2) * (salt + 0.01) * (protein + 0.01)
+        return ((water + 1.0) / 10) / (salt + 1.0) * (alcohol + 1.0)
     }
     
     init (data: [String:Any]) {

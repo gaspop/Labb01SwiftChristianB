@@ -84,6 +84,13 @@ class GASMainViewController: UIViewController {
         searchFieldGap = Float(labelSearchFeedback.center.y) - Float(viewSearchWrapper.center.y)
         textSearchField.text = UserData.lastSearchWord
         // Do any additional setup after loading the view.
+        
+        if let navBarItems = navigationItem.rightBarButtonItems {
+            var urk = navBarItems
+            print("GNAPP \(urk)")
+            urk.removeAll()
+            print("BLEP \(urk)")
+        }
     }
     
     func keyboardWillShow(notification: Notification) {

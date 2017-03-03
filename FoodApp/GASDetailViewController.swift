@@ -13,6 +13,8 @@ class GASDetailTableViewCell : UITableViewCell {
     @IBOutlet weak var labelName : UILabel!
     @IBOutlet weak var labelValue : UILabel!
     
+    
+    
 }
 
 class GASDetailViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITableViewDelegate, UITableViewDataSource {
@@ -52,7 +54,7 @@ class GASDetailViewController: UIViewController, UIImagePickerControllerDelegate
     func convertFoodToTableData() {
         if food.details != nil {
             foodAsTableData.append((APIFood.keyEnergy.0,"\(Int(food.energy))"))
-            foodAsTableData.append((APIFood.keyProtein.0,"\(food.protein)"))
+            foodAsTableData.append((APIFood.keyAlcohol.0,"\(food.alcohol)"))
             foodAsTableData.append((APIFood.keySalt.0,"\(food.salt)"))
             foodAsTableData.append((APIFood.keyWater.0,"\(food.water)"))
             foodAsTableData.append((APIFood.keyHealth,"\(food.healthyness)"))
@@ -69,7 +71,6 @@ class GASDetailViewController: UIViewController, UIImagePickerControllerDelegate
         labelName.text = food.name
         convertFoodToTableData()
         tableView.reloadData()
-        //displayFoodDetails()
         // Do any additional setup after loading the view.
         
         //detailTableView.add
@@ -80,20 +81,6 @@ class GASDetailViewController: UIViewController, UIImagePickerControllerDelegate
             imageView.image = image
         } else {
             NSLog("Failed to load image from: \(imagePath)")
-        }
-    }
-    
-    func displayFoodDetails() {
-        if food.details != nil {
-            textInformation.text = "Energivärde:\n\nProtein:\nSalt:\nVatten:"
-            textValues.text = "\(Int(food.energy))\n\n\(food.protein)\n\(food.salt)\n\(food.water)"
-        } else {
-            textInformation.text = ""
-            textValues.text = ""
-            food.getDetails {
-                print("Food item missing details; retrieving...")
-                self.displayFoodDetails()
-            }
         }
     }
 

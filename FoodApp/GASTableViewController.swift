@@ -101,7 +101,7 @@ class GASTableViewController: UITableViewController, UISearchResultsUpdating {
     var lastRowIndex : Int = 0
     let rowRange : Int = 20
     
-    let maxSelected : Int = 7
+    let maxSelected : Int = 5
     var selected : [APIFood] = []
     var isSelecting : Bool = false
     
