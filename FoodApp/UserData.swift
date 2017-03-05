@@ -10,8 +10,6 @@ import Foundation
 
 private let keyFavouritesIDs = "favouritesIDs"
 private let keyFavourites = "favourites"
-private let keyColor = "color"
-
 private let keySearchWord = "searchWord"
 
 class UserData {
@@ -80,9 +78,7 @@ class UserData {
         defaults.set(newFavouritesData, forKey: keyFavourites)
         
         var newFavouritesIDs = favouritesIDs
-        print("ID Old:\n\(newFavouritesIDs)")
         newFavouritesIDs = newFavouritesIDs.filter( { $0 != food.number } )
-        print("ID New:\n\(newFavouritesIDs)")
         defaults.set(newFavouritesIDs, forKey: keyFavouritesIDs)
         
         defaults.synchronize()

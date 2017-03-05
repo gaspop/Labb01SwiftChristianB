@@ -10,6 +10,12 @@ import UIKit
 
 class GASMainViewController: UIViewController {
 
+    @IBOutlet weak var barButtonFavourites: UIBarButtonItem!
+    
+    @IBOutlet weak var imageFalling1: UIImageView!
+    @IBOutlet weak var imageFalling2: UIImageView!
+    @IBOutlet weak var imageFalling3: UIImageView!
+    
     @IBOutlet weak var viewBackground: UIView!
     @IBOutlet weak var viewLogoContainer: UIView!
     @IBOutlet weak var viewSearchContainer: UIView!
@@ -17,36 +23,22 @@ class GASMainViewController: UIViewController {
     @IBOutlet weak var textSearchField: UITextField!
     @IBOutlet weak var buttonSearch: UIButton!
     
-    @IBOutlet weak var barButtonFavourites: UIBarButtonItem!
-    @IBOutlet weak var labelSearchFeedback: UILabel!
+    @IBOutlet weak var viewMessage: UIView!
+    @IBOutlet weak var labelMessage: UILabel!
     
     var searchResult : [APIFood] = []
     
-    var searchFieldOrigin : CGPoint {
-        return CGPoint(x: self.viewSearchWrapper.center.x,
-                       y: self.viewLogoContainer.frame.height
-                          + (self.viewSearchContainer.frame.height / 2))
-    }
     var searchFieldGap : Float = 0.0
+    
+    var messageTimer = Timer()
+    var messageIsShowing : Bool = false
+    var messageIsMoving : Bool = false
+    let messageMoveTime : Double = 0.5
+    let messageAppearanceTime : Double = 3.0
     
     @IBAction func pressSearch(_ sender: UIButton) {
         search()
-        //performSegue(withIdentifier: "tableViewSegue", sender: sender)
     }
-    
-    func resetSearchField() {
-        self.viewSearchWrapper.center = CGPoint(x: self.viewSearchWrapper.center.x,
-                                                y: self.viewLogoContainer.frame.height
-                                                + (self.viewSearchContainer.frame.height / 2))
-    }
-    
-    func positionSearchField() {
-        self.viewSearchWrapper.center = CGPoint(x: self.viewSearchWrapper.center.x,
-                                                y: self.viewLogoContainer.frame.height / 2)
-        
-        //var y = UIKeyboardFrameBeginUserInfoKey
-    }
-    
 
     @IBAction func searchTextChanged(_ sender: UITextField) {
         if let text = sender.text {
@@ -54,22 +46,121 @@ class GASMainViewController: UIViewController {
         }
     }
     
+    func getRandomFallingPoint() -> CGPoint {
+        let x : Int = Int(arc4random_uniform(UInt32(view.frame.width)))
+        let y : Int = -64 - Int(arc4random_uniform(UInt32(32)))
+        return CGPoint(x: x, y: y)
+    }
     
-    override func viewDidLayoutSubviews() {
-        //viewSearchWrapper.center = searchFieldOrigin
-        print("Reset searchField position.")
-        /*resetSearchField()
-        if (textSearchField.isEditing) {
-            positionSearchField()
-        }*/
+    func getRandomGravityMagnitude() -> CGFloat {
+        return CGFloat(Float(Float(arc4random_uniform(3)+1) / 10.0))
+    }
+    
+    func getRandomTimeInterval() -> TimeInterval {
+        return TimeInterval(4.0 + Float(arc4random_uniform(2)))
+    }
+    
+    func setRandomImage(_ view: UIImageView) {
+        var imageName = ""
+        let rnd = arc4random_uniform(3)
+        switch rnd {
+        case 0: imageName = "foodApple"
+        case 1: imageName = "foodBanana"
+        case 2: imageName = "foodFish"
+        default: imageName = "foodApple"
+        }
+        
+        let image = UIImage(named: imageName)?.withRenderingMode(.alwaysOriginal)
+        view.image = image
+    }
+    
+    func rotateFallingObject(_ view: UIImageView) {
+        view.transform = CGAffineTransform(rotationAngle: 0)
+        UIView.animate(withDuration: getRandomTimeInterval()) {
+            view.transform = CGAffineTransform(rotationAngle: 3.14)
+        }
+    }
+    
+    func setupFallingObjects() {
+        let dynamic1 = UIDynamicAnimator(referenceView: view)
+        let dynamic2 = UIDynamicAnimator(referenceView: view)
+        let dynamic3 = UIDynamicAnimator(referenceView: view)
+        let gravity1 = UIGravityBehavior(items: [imageFalling1])
+        let gravity2 = UIGravityBehavior(items: [imageFalling2])
+        let gravity3 = UIGravityBehavior(items: [imageFalling3])
+        let tupleFalling1 = (dynamic1, gravity1, imageFalling1)
+        let tupleFalling2 = (dynamic2, gravity2, imageFalling2)
+        let tupleFalling3 = (dynamic3, gravity3, imageFalling3)
+        let tupleGravity = [tupleFalling1, tupleFalling2, tupleFalling3]
+        for tuple in tupleGravity {
+            tuple.2.center = getRandomFallingPoint()
+            tuple.1.magnitude = getRandomGravityMagnitude()
+            tuple.0.addBehavior(tuple.1)
+            Timer.scheduledTimer(withTimeInterval: getRandomTimeInterval(), repeats: true) {
+                finished in
+                tuple.0.removeBehavior(tuple.1)
+                tuple.2.center = self.getRandomFallingPoint()
+                self.rotateFallingObject(tuple.2)
+                self.setRandomImage(tuple.2)
+                tuple.0.addBehavior(tuple.1)
+            }
+        }
+        
+    }
+    
+    func alignMessage() {
+        viewMessage.frame = viewSearchWrapper.frame
+        labelMessage.frame = viewMessage.frame
+        viewMessage.center = CGPoint(x: viewSearchWrapper.center.x,
+                                     y: viewMessage.center.y)
+        labelMessage.center = CGPoint(x: labelMessage.frame.width / 2, y: labelMessage.frame.height / 2)
+    }
+    
+    func positionMessage() {
+        viewMessage.center = CGPoint(x: viewMessage.center.x,
+                                     y: viewSearchWrapper.center.y + CGFloat(searchFieldGap))
+    }
+    
+    func showMessage(_ message: String) {
+        labelMessage.text = message
+        viewMessage.isHidden = false
+        messageIsShowing = true
+        if messageTimer.isValid {
+            messageTimer.invalidate()
+        }
+        if !messageIsMoving {
+            messageIsMoving = true
+            UIView.animate(withDuration: messageMoveTime, animations: {
+                self.viewMessage.alpha = 1.0
+                self.positionMessage()
+            }) { finished in
+                self.messageIsMoving = false
+                self.messageTimer = Timer.scheduledTimer(withTimeInterval: self.messageAppearanceTime, repeats: false) {
+                    finished in
+                    self.hideMessage()
+                }
+            }
+        }
+    }
+    
+    func hideMessage() {
+        messageIsMoving = true
+        UIView.animate(withDuration: messageMoveTime, animations: {
+            self.viewMessage.center = CGPoint(x: self.viewMessage.center.x,
+                                              y: self.viewBackground.frame.height + self.viewMessage.frame.height)
+            self.viewMessage.alpha = 0.0
+        }) { finished in
+            self.messageIsMoving = false
+            self.viewMessage.isHidden = true
+            self.messageIsShowing = false
+            self.labelMessage.text = ""
+        }
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        if UserData.favouritesIDs.count > 0 {
-            barButtonFavourites.isEnabled = true
-        } else {
-            barButtonFavourites.isEnabled = false
-        }
+        barButtonFavourites.isEnabled = UserData.favouritesIDs.count > 0
+
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
@@ -81,16 +172,18 @@ class GASMainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        searchFieldGap = Float(labelSearchFeedback.center.y) - Float(viewSearchWrapper.center.y)
-        textSearchField.text = UserData.lastSearchWord
-        // Do any additional setup after loading the view.
         
-        if let navBarItems = navigationItem.rightBarButtonItems {
-            var urk = navBarItems
-            print("GNAPP \(urk)")
-            urk.removeAll()
-            print("BLEP \(urk)")
-        }
+        setupFallingObjects()
+        
+        searchFieldGap = Float(viewSearchWrapper.frame.height) + 8.0
+        textSearchField.text = UserData.lastSearchWord
+        labelMessage.text = ""
+        alignMessage()
+        
+        viewMessage.center = CGPoint(x: viewMessage.center.x,
+                                     y: viewBackground.frame.height + viewMessage.frame.height)
+        hideMessage()
+
     }
     
     func keyboardWillShow(notification: Notification) {
@@ -98,8 +191,9 @@ class GASMainViewController: UIViewController {
             if let keyboardSize = (userInfo[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
                 viewSearchWrapper.center = CGPoint(x: viewSearchWrapper.center.x,
                                                    y: (viewBackground.frame.height - keyboardSize.height) / 2)
-                labelSearchFeedback.center = CGPoint(x: labelSearchFeedback.center.x,
-                                                     y: viewSearchWrapper.center.y + CGFloat(searchFieldGap))
+                if messageIsShowing {
+                    positionMessage()
+                }
             } else {
                 // no UIKeyboardFrameBeginUserInfoKey entry in userInfo
             }
@@ -112,8 +206,9 @@ class GASMainViewController: UIViewController {
         viewSearchWrapper.center = CGPoint(x: viewSearchWrapper.center.x,
                                            y: viewLogoContainer.frame.height
                                               + (viewSearchContainer.frame.height / 2))
-        labelSearchFeedback.center = CGPoint(x: labelSearchFeedback.center.x,
-                                             y: viewSearchWrapper.center.y + CGFloat(searchFieldGap))
+        if messageIsShowing {
+            positionMessage()
+        }
     }
 
     func search() {
@@ -126,32 +221,22 @@ class GASMainViewController: UIViewController {
                     self.searchResult.append(APIFood(data: item))
                 }
                 if self.searchResult.count > 0 {
-                    print("Search result count: \(self.searchResult.count)")
-                    self.labelSearchFeedback.text = ""
                     self.performSegue(withIdentifier: "showSearchResult", sender: nil)
                 } else {
-                    self.labelSearchFeedback.text = "Inget resultat."
+                   self.showMessage("Inget resultat.")
                 }
             }
         } else {
-            labelSearchFeedback.text = "Inget att söka efter."
+            showMessage("Inget att söka efter.")
         }
     }
-    
-    /*
-    override func performSegue(withIdentifier identifier: String, sender: Any?) {
-        if identifier == "tableViewSegue" {
-            print("FLORF")
-        }
-    }*/
 
     
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+
         if segue.identifier == "showSearchResult",
             let target = segue.destination as? GASTableViewController {
             target.data = searchResult
@@ -160,6 +245,7 @@ class GASMainViewController: UIViewController {
             target.data = []
             target.tableMode = .Favourites
         }
+        
     }
 
 }

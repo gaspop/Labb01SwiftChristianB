@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "compareBarButtonIcon22x22.png",
+      "filename" : "scalesIcon22x22.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "compareBarButtonIcon44x44.png",
+      "filename" : "scalesIcon44x44.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "compareBarButtonIcon66x66.png",
+      "filename" : "scalesIcon66x66.png",
       "scale" : "3x"
     }
   ],

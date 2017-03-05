@@ -19,9 +19,11 @@ class GASFoodChart : GKBarGraph, GKBarGraphDataSource {
             _data = value
         }
     }
-    
+    public var returnValue : ((APIFood) -> NSNumber)?
     public var maxValue : Double = 1000.0
     public var maxWidth : CGFloat = 80.0
+    
+    var colors : [UIColor] = [UIColor.red]
     
     public func updateMeasurements() {
 
@@ -50,28 +52,24 @@ class GASFoodChart : GKBarGraph, GKBarGraphDataSource {
         super.draw()
     }
     
-    /*
-    init(frame: CGRect,data:[APIFood]) {
-        super.init(frame: frame)
-        self.data = data
-    }
-    
-    required init(coder: NSCoder) {
-        super.init(coder: coder)?
-    }*/
-    
     public func numberOfBars() -> Int {
         return data.count
     }
     
     public func valueForBar(at index: Int) -> NSNumber! {
-        let value = NSNumber(floatLiteral: Double(data[index].energy))
-        let scale = value.doubleValue / maxValue
-        return NSNumber(floatLiteral: 100.0 * scale)
+        
+        if let action = returnValue {
+            let value = action(data[index])
+            let scale = value.doubleValue / maxValue
+            return NSNumber(floatLiteral: 100.0 * scale)
+        } else {
+            return 0.0
+        }
+        
     }
     
     public func colorForBar(at index: Int) -> UIColor! {
-        return UIColor.yellow
+        return colors[index % colors.count]
     }
     
     public func colorForBarBackground(at index: Int) -> UIColor! {

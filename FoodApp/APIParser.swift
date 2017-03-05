@@ -8,8 +8,6 @@
 
 import Foundation
 
-//class APIParser {
-
 let baseURL : String = "http://www.matapi.se/foodstuff"
 let jsonOptions = JSONSerialization.ReadingOptions()
 
@@ -26,7 +24,7 @@ func contactAPI(query: String, closure:@escaping (Data) -> Void) {
             if let unwrappedData = data {
                 closure(unwrappedData)
             } else {
-                print("Kunde inte hämta data.")
+                // Failed in retrieving data
             }
         }
         task.resume()
@@ -57,5 +55,3 @@ func getSearchResult(word: String, closure: @escaping([[String:Any]]) -> Void) {
 func getItem(number: Int, closure: @escaping([String:Any]) -> Void) {
     getDataOfType(query: "/\(number)", closure: closure)
 }
-
-//}

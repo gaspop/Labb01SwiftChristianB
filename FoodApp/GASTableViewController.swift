@@ -12,8 +12,6 @@ import BEMCheckBox
 class GASTableViewCell : UITableViewCell, BEMCheckBoxDelegate {
     
     @IBOutlet weak var buttonSelect: BEMCheckBox!
-    
-    //@IBOutlet weak var buttonSelect: UIButton!
     @IBOutlet weak var buttonFavourite: UIButton!
     @IBOutlet weak var labelText: UILabel!
     @IBOutlet weak var labelValue: UILabel!
@@ -34,32 +32,28 @@ class GASTableViewCell : UITableViewCell, BEMCheckBoxDelegate {
     }
     
     func toggleSelectedStatus() {
-        for (index,item) in table.selected.enumerated() {
-            if item.number == food.number {
-                table.selected.remove(at: index)
-                setButtonSelectedStatus()
-                return
+        let index = food.isInArray(table.selected)
+        if index >= 0 {
+            table.selected.remove(at: index)
+        } else {
+            if table.selected.count < table.maxSelected {
+                table.selected.append(food)
             }
         }
-        if table.selected.count < table.maxSelected {
-            table.selected.append(food)
-        }
         setButtonSelectedStatus()
+        table.setButtonCompareStatus()
     }
     
-    
     func setButtonFavouriteStatus() {
-        let image = UIImage(named: "heartIcon")?.withRenderingMode(.alwaysTemplate)
-        buttonFavourite.setImage(image, for: .normal)
         if food.isFavourite {
-            buttonFavourite.tintColor = UIColor.red
+            setButtonImage(button: buttonFavourite, image: "heartIcon", color: UIColor.red)
         } else {
-            buttonFavourite.tintColor = UIColor.lightGray
+            setButtonImage(button: buttonFavourite, image: "heartIcon", color: UIColor.lightGray)
         }
     }
     
     func setButtonSelectedStatus() {
-        if table.isItemSelected(food) {
+        if food.isInArray(table.selected) >= 0 {
             buttonSelect.on = true
         } else {
             buttonSelect.on = false
@@ -75,6 +69,8 @@ class GASTableViewController: UITableViewController, UISearchResultsUpdating {
     var searchController : UISearchController!
 
     @IBOutlet weak var barButtonFavourites: UIBarButtonItem!
+    @IBOutlet weak var barButtonSelected: UIBarButtonItem!
+    @IBOutlet weak var barButtonCompare: UIBarButtonItem!
     
     var data : [APIFood] = []
     var searchData : [APIFood] = []
@@ -101,7 +97,7 @@ class GASTableViewController: UITableViewController, UISearchResultsUpdating {
     var lastRowIndex : Int = 0
     let rowRange : Int = 20
     
-    let maxSelected : Int = 5
+    let maxSelected : Int = 6
     var selected : [APIFood] = []
     var isSelecting : Bool = false
     
@@ -128,15 +124,6 @@ class GASTableViewController: UITableViewController, UISearchResultsUpdating {
         return searchController.isActive && !(searchController.searchBar.text ?? "").isEmpty
     }
     
-    func isItemSelected(_ food: APIFood) -> Bool {
-        for item in selected {
-            if item.number == food.number {
-                return true
-            }
-        }
-        return false
-    }
-    
     func resetTableRange() {
         checkedRangeMin = 0
         checkedRangeMax = 0
@@ -149,6 +136,7 @@ class GASTableViewController: UITableViewController, UISearchResultsUpdating {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        setButtonCompareStatus()
         tableView.reloadData()
     }
     
@@ -192,8 +180,17 @@ class GASTableViewController: UITableViewController, UISearchResultsUpdating {
         isSelecting = !isSelecting
         tableView.reloadData()
     }
+    
+    @IBAction func pressButtonCompare(_ sender: UIBarButtonItem) {
+        performSegue(withIdentifier: "compare", sender: sender)
+    }
+    
+    func setButtonCompareStatus() {
+        barButtonCompare.isEnabled = selected.count > 1
+    }
+    
+    
     // MARK: - Table view data source
-
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -214,15 +211,13 @@ class GASTableViewController: UITableViewController, UISearchResultsUpdating {
         
         cell.food = tableData[row]
 
-        if row <= checkedRangeMin {
+        if row <= checkedRangeMin + 8 {
             checkedRangeMin = max(0, row - rowRange)
             requestDetailsWithRange(checkedRangeMin, row)
-            //print("up range")
         }
-        if row >= checkedRangeMax {
+        if row >= checkedRangeMax - 8 {
             checkedRangeMax = min(row + rowRange, tableDataCount - 1)
             requestDetailsWithRange(row, checkedRangeMax)
-            //print("down range")
         }
 
         cell.labelText.text = cell.food.name
@@ -250,15 +245,13 @@ class GASTableViewController: UITableViewController, UISearchResultsUpdating {
     func requestDetailsWithRange(_ from: Int, _ to: Int) {
         let fromSafe : Int = max(0, from)
         let toSafe : Int = min(to, tableDataCount - 1)
-        //var fromData : [APIFood] = tableMode == Mode.Normal ? data : searchData
         
         for index in fromSafe...toSafe {
             tableData[index].getDetails() {
-                param in
+                finished in
                 self.tableView.reloadData()
             }
         }
-        //print("requestDetailWithRange: \(fromSafe) to \(toSafe)")
     }
 
     /*
@@ -303,13 +296,14 @@ class GASTableViewController: UITableViewController, UISearchResultsUpdating {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         print ("Prepare for segue '\(segue.identifier)'")
 
-        if segue.identifier == "detailSegue",
+        if segue.identifier == "showDetails",
            let target = segue.destination as? GASDetailViewController,
            let row = tableView.indexPathForSelectedRow?.row {
-            print("Preparing segue '\(segue.identifier)': Row = \(row)")
             target.food = tableData[row]
             target.selected = selected
-            //target.tableView = self
+        } else if segue.identifier == "compare",
+            let target = segue.destination as? GASCompareViewController {
+            target.selected = selected
         }
 
     }

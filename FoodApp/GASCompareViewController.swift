@@ -8,13 +8,17 @@
 
 import UIKit
 import GraphKit
-import BEMCheckBox
-//import Diagram
+
+func setButtonImage(button: UIButton, image: String, color: UIColor) {
+    let newImage = UIImage(named: image)?.withRenderingMode(.alwaysTemplate)
+    button.setImage(newImage, for: .normal)
+    button.tintColor = color
+}
 
 class GASCompareTableViewCell : UITableViewCell {
     
     @IBOutlet weak var labelName : UILabel!
-    @IBOutlet weak var buttonSelect: BEMCheckBox!
+    @IBOutlet weak var buttonColor: UIButton!
     
     var food : APIFood!
     
@@ -28,12 +32,12 @@ class GASCompareViewController: UIViewController, UITableViewDelegate, UITableVi
     @IBOutlet weak var buttonWater: UIButton!
     @IBOutlet weak var buttonHealthyness: UIButton!
     
-    var tupleEnergy, tupleAlcohol, tupleSalt, tupleWater, tupleHealthyness : (UIButton, String)!
-    
     @IBOutlet weak var chartView: UIView!
     
     var chart : GASFoodChart!
-    var data : [APIFood] = []
+    var selected : [APIFood] = []
+    
+    var tupleEnergy, tupleAlcohol, tupleSalt, tupleWater, tupleHealthyness : (UIButton, String)!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,22 +47,59 @@ class GASCompareViewController: UIViewController, UITableViewDelegate, UITableVi
         tupleSalt = (buttonSalt, "saltIcon")
         tupleWater = (buttonWater, "waterIcon")
         tupleHealthyness = (buttonHealthyness, "healthIcon")
-        
-        deselectButtons()
 
         chart = GASFoodChart(frame: chartView.frame)
-        chart.data = data
+        chart.data = selected
         chart.dataSource = chart
+        chart.colors = [UIColor.yellow,
+                        UIColor.orange,
+                        UIColor.red,
+                        UIColor.purple,
+                        UIColor.blue,
+                        UIColor.green]
         
         chartView.addSubview(chart)
-        chart.draw()
         
-        
-        // Do any additional setup after loading the view.
+        selectEnergy(buttonEnergy)
     }
-
-    override func viewDidLayoutSubviews() {
-        chart.frame = chartView.frame
+    
+    @IBAction func selectEnergy(_ sender: UIButton) {
+        deselectButtons()
+        setButtonImage(button: tupleEnergy.0, image: tupleEnergy.1, color: UIColor.white)
+        chart.returnValue = { return NSNumber(integerLiteral: Int($0.energy)) }
+        chart.maxValue = 1000.0
+        chart.draw()
+    }
+    
+    @IBAction func selectAlcohol(_ sender: UIButton) {
+        deselectButtons()
+        setButtonImage(button: tupleAlcohol.0, image: tupleAlcohol.1, color: UIColor.white)
+        chart.returnValue = { return NSNumber(floatLiteral: Double($0.alcohol)) }
+        chart.maxValue = 100.0
+        chart.draw()
+    }
+    
+    @IBAction func selectSalt(_ sender: UIButton) {
+        deselectButtons()
+        setButtonImage(button: tupleSalt.0, image: tupleSalt.1, color: UIColor.white)
+        chart.returnValue = { return NSNumber(floatLiteral: Double($0.salt)) }
+        chart.maxValue = 100.0
+        chart.draw()
+    }
+    
+    @IBAction func selectWater(_ sender: UIButton) {
+        deselectButtons()
+        setButtonImage(button: tupleWater.0, image: tupleWater.1, color: UIColor.white)
+        chart.returnValue = { return NSNumber(floatLiteral: Double($0.water)) }
+        chart.maxValue = 100.0
+        chart.draw()
+    }
+    
+    @IBAction func selectHealthyness(_ sender: UIButton) {
+        deselectButtons()
+        setButtonImage(button: tupleHealthyness.0, image: tupleHealthyness.1, color: UIColor.white)
+        chart.returnValue = { return NSNumber(floatLiteral: Double($0.healthyness)) }
+        chart.maxValue = 25.0
         chart.draw()
     }
     
@@ -68,34 +109,25 @@ class GASCompareViewController: UIViewController, UITableViewDelegate, UITableVi
         ]
         
         for b in buttonImageTuples {
-            let image = UIImage(named: b.1)?.withRenderingMode(.alwaysTemplate)
-            b.0.setImage(image, for: .normal)
-            b.0.tintColor = UIColor.darkGray
+            setButtonImage(button: b.0, image: b.1, color: UIColor.gray)
         }
     }
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
-        // Cell gets various attributes set automatically based on table (separators) and data source (accessory views, editing controls)
-        //return foodAsTableData.count
-        return data.count
+        return selected.count
     }
     
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! GASCompareTableViewCell
         
-        cell.food = data[indexPath.row]
+        cell.food = selected[indexPath.row]
         cell.labelName.text = cell.food.name
-        //cell.labelValue.text = foodAsTableData[indexPath.row].1
+        setButtonImage(button: cell.buttonColor, image: "circleIcon", color: chart.colors[indexPath.row % chart.colors.count])
+        
         return cell
     }
-    
-    public func numberOfSections(in tableView: UITableView) -> Int {
-        // Default is 1 if not implemented
-        return 1
-    }
-    
+
     /*
     // MARK: - Navigation
 

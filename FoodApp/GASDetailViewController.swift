@@ -13,7 +13,10 @@ class GASDetailTableViewCell : UITableViewCell {
     @IBOutlet weak var labelName : UILabel!
     @IBOutlet weak var labelValue : UILabel!
     
-    
+    func setLabels(name: String, value: String) {
+        labelName.text = name
+        labelValue.text = value
+    }
     
 }
 
@@ -22,17 +25,18 @@ class GASDetailViewController: UIViewController, UIImagePickerControllerDelegate
     @IBOutlet weak var tableView: UITableView!
     
     @IBOutlet weak var labelName: UILabel!
+    @IBOutlet weak var imageCamera: UIImageView!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var textInformation: UITextView!
     @IBOutlet weak var textValues: UITextView!
     
+    @IBOutlet weak var buttonFavourite: UIButton!
+    @IBOutlet weak var buttonPhoto: UIButton!
+    @IBOutlet weak var buttonCompare: UIButton!
+    
+    
     var selected : [APIFood] = []
-    
-    //weak var tableView : GASTableViewController?
-    
     var food : APIFood!
-    //var input : String?
-    var foodAsTableData : [(String,String)] = []
     
     let imageDirectory = "/FoodApp/"
     var imageName : String {
@@ -51,16 +55,6 @@ class GASDetailViewController: UIViewController, UIImagePickerControllerDelegate
         performSegue(withIdentifier: "compare", sender: sender)
     }
     
-    func convertFoodToTableData() {
-        if food.details != nil {
-            foodAsTableData.append((APIFood.keyEnergy.0,"\(Int(food.energy))"))
-            foodAsTableData.append((APIFood.keyAlcohol.0,"\(food.alcohol)"))
-            foodAsTableData.append((APIFood.keySalt.0,"\(food.salt)"))
-            foodAsTableData.append((APIFood.keyWater.0,"\(food.water)"))
-            foodAsTableData.append((APIFood.keyHealth,"\(food.healthyness)"))
-        }
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         displayFoodImage()
     }
@@ -69,23 +63,66 @@ class GASDetailViewController: UIViewController, UIImagePickerControllerDelegate
         super.viewDidLoad()
         
         labelName.text = food.name
-        convertFoodToTableData()
         tableView.reloadData()
-        // Do any additional setup after loading the view.
         
-        //detailTableView.add
+        setButtonFavouriteStatus()
+        setButtonCompareStatus()
+        
+        let image = UIImage(named: "cameraIcon")?.withRenderingMode(.alwaysTemplate)
+        imageCamera.image = image
+        imageCamera.tintColor = UIColor.gray
+    }
+    
+    @IBAction func pressButtonFavourite(_ sender: UIButton) {
+        food.toggleFavouriteStatus()
+        setButtonFavouriteStatus()
+    }
+    
+    @IBAction func pressButtonPhoto(_ sender: UIButton) {
+        selectImage()
+    }
+    
+    @IBAction func pressButtonCompare(_ sender: UIButton) {
+        performSegue(withIdentifier: "compare", sender: sender)
+    }
+    
+    
+    func setButtonFavouriteStatus() {
+        if food.isFavourite {
+            setButtonImage(button: buttonFavourite, image: "heartIcon", color: UIColor.red)
+        } else {
+            setButtonImage(button: buttonFavourite, image: "heartIcon", color: UIColor.white)
+        }
+    }
+    
+    func setButtonCompareStatus() {
+        var canCompare = true
+        if selected.count == 1 && food.isInArray(selected) >= 0 {
+            canCompare = false
+        } else if selected.count == 6 && food.isInArray(selected) < 0 {
+            canCompare = false
+        } else if selected.count == 0 {
+            canCompare = false
+        }
+        
+        if canCompare {
+            buttonCompare.isEnabled = true
+            setButtonImage(button: buttonCompare, image: "scalesIcon", color: UIColor.white)
+        } else {
+            buttonCompare.isEnabled = false
+            setButtonImage(button: buttonCompare, image: "scalesIcon", color: UIColor.gray)
+        }
     }
     
     func displayFoodImage() {
         if let image = UIImage(contentsOfFile: imagePath) {
             imageView.image = image
         } else {
-            NSLog("Failed to load image from: \(imagePath)")
+            // Failed
         }
     }
 
-    @IBAction func selectImage(_ sender: UITapGestureRecognizer) {
-        print("Blepp")
+    func selectImage() {
         let picker = UIImagePickerController()
         picker.delegate = self
         picker.allowsEditing = true
@@ -103,16 +140,14 @@ class GASDetailViewController: UIViewController, UIImagePickerControllerDelegate
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         let image = info[UIImagePickerControllerEditedImage] as! UIImage
-        // UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
         
         if let data = UIImagePNGRepresentation(image) {
             do {
                 let url = URL(fileURLWithPath: imagePath)
                 try data.write(to: url)
-                NSLog("Done writing image data to file: \(imagePath)")
             }
-            catch let error {
-                NSLog("Failed to save data: \(error)")
+            catch {
+                // Failed
             }
         }
         
@@ -125,45 +160,52 @@ class GASDetailViewController: UIViewController, UIImagePickerControllerDelegate
     
     
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    // Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
-    // Cell gets various attributes set automatically based on table (separators) and data source (accessory views, editing controls)
-        return foodAsTableData.count
+
+        if food.details != nil {
+            return 5
+        } else {
+            return 0
+        }
+        
     }
     
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! GASDetailTableViewCell
         
-        cell.labelName.text = foodAsTableData[indexPath.row].0
-        cell.labelValue.text = foodAsTableData[indexPath.row].1
+        switch indexPath.row {
+            
+        case 0: cell.setLabels(name: APIFood.keyEnergy, value: "\(Int(food.energy))")
+        case 1: cell.setLabels(name: APIFood.keyAlcohol, value: "\(food.alcohol)")
+        case 2: cell.setLabels(name: APIFood.keySalt, value: "\(food.salt)")
+        case 3: cell.setLabels(name: APIFood.keyWater, value: "\(food.water)")
+        case 4: cell.setLabels(name: APIFood.keyHealth, value: "\(food.healthyness)")
+            
+        default: cell.setLabels(name: "", value: "")
+            
+        }
         return cell
     }
     
     public func numberOfSections(in tableView: UITableView) -> Int {
-        // Default is 1 if not implemented
         return 1
     }
-    
-    /*
-    public func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Blepp"
-     // fixed font style. use custom view (UILabel) if you want something different
-    }
-    */
-    
     
     
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
         
         if segue.identifier == "compare",
            let target = segue.destination as? GASCompareViewController {
-            target.data.append(food)
-            target.data.append(contentsOf: selected.filter( { f in f.number != food.number } ) )
+            if food.isInArray(selected) >= 0 {
+                target.selected = selected
+            } else {
+                var insertedSelected = selected
+                insertedSelected.insert(food, at: 0)
+                target.selected = insertedSelected
+            }
         }
         
     }
