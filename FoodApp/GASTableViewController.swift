@@ -294,8 +294,7 @@ class GASTableViewController: UITableViewController, UISearchResultsUpdating {
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        print ("Prepare for segue '\(segue.identifier)'")
-
+        
         if segue.identifier == "showDetails",
            let target = segue.destination as? GASDetailViewController,
            let row = tableView.indexPathForSelectedRow?.row {
